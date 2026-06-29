@@ -1,0 +1,2 @@
+- [Session cookie setup](session-cookies.md) — customFetch needs credentials:"include" and setBaseUrl() in main.tsx for session auth to work
+- [Admin session 401 handling](admin-session-401.md) — useGetAdminSession must use retry:false + throwOnError:false or admin page goes blank
