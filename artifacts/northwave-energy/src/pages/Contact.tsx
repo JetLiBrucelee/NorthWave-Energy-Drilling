@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, organizationJsonLd } from "@/components/SEO";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -57,6 +57,7 @@ export default function Contact() {
         title="Contact Us | NorthWave Energy Drilling"
         description="Get in touch with NorthWave Energy Drilling for consultation on your next major offshore project."
         url="/contact"
+        jsonLd={organizationJsonLd}
       />
       
       <section className="bg-slate-900 py-16 border-b border-slate-800">

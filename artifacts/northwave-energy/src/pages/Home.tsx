@@ -37,7 +37,6 @@ export default function Home() {
           >
             {/* Pexels CC0 offshore drilling footage */}
             <source src="https://videos.pexels.com/video-files/3249060/3249060-sd_640_360_25fps.mp4" type="video/mp4" />
-            <source src="https://player.vimeo.com/external/384967955.sd.mp4?s=f3e5ce5b9c6b5e6c5e2b4d7d5f3f5e5b&profile_id=165" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>

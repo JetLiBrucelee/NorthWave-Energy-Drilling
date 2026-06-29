@@ -358,6 +358,19 @@ export async function customFetch<T = unknown>(
     }
   }
 
+  // Attach CSRF token for state-changing requests.
+  // Reads the "csrf-token" cookie (set by the server as non-httpOnly) and
+  // forwards it as the X-CSRF-Token request header so the server can validate it.
+  const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+  if (MUTATING_METHODS.has(method) && !headers.has("x-csrf-token") && typeof document !== "undefined") {
+    const csrfCookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("csrf-token="));
+    if (csrfCookie) {
+      headers.set("x-csrf-token", csrfCookie.split("=")[1]);
+    }
+  }
+
   const requestInfo = { method, url: resolveUrl(input) };
 
   const response = await fetch(input, { ...init, method, headers, credentials: "include" });

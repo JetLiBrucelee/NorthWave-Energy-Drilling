@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, organizationJsonLd } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { useGetSiteSettings, useListWorkers } from "@workspace/api-client-react";
 import { Phone, CheckCircle } from "lucide-react";
@@ -23,6 +23,7 @@ export default function About() {
         title="About Us | NorthWave Energy Drilling"
         description="Learn about our history, our leadership, and the expert crew that makes NorthWave a leader in offshore drilling."
         url="/about"
+        jsonLd={organizationJsonLd}
       />
       
       {/* Header */}

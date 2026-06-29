@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, organizationJsonLd } from "@/components/SEO";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
@@ -32,6 +32,7 @@ export default function Projects() {
         title="Project Gallery | NorthWave Energy Drilling"
         description="Visual showcase of NorthWave Energy Drilling's offshore operations, rigs, and crew in action."
         url="/projects"
+        jsonLd={organizationJsonLd}
       />
       
       <section className="bg-slate-900 py-16 border-b border-slate-800">

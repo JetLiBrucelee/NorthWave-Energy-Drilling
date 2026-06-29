@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, organizationJsonLd } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { Anchor, Settings, Waves, Search, Ruler, Wrench } from "lucide-react";
 import pipelineImg from "@assets/Screenshot_2026-06-29_at_11.11.59_AM_1782745943545.png";
@@ -50,6 +50,7 @@ export default function Services() {
         title="Services | NorthWave Energy Drilling"
         description="Comprehensive offshore drilling services including directional drilling, platform maintenance, and subsea inspection."
         url="/services"
+        jsonLd={organizationJsonLd}
       />
       
       {/* Header */}
