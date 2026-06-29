@@ -146,6 +146,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Highlight Strip ── */}
+      <section className="bg-[hsl(222,47%,7%)] border-b border-white/[0.07] py-4">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-0 gap-y-2">
+            {[
+              "Offshore Rigs Deployed",
+              "Arctic & Deepwater Projects",
+              "Subsea Installations Completed",
+              "Active Field Operations",
+              "Safety Performance Record",
+            ].map((label, i, arr) => (
+              <span key={i} className="flex items-center">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/45 px-4 md:px-6">
+                  {label}
+                </span>
+                {i < arr.length - 1 && (
+                  <span className="h-3 w-px bg-white/15 shrink-0" aria-hidden="true" />
+                )}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Integrated Capabilities ── */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
@@ -154,7 +178,7 @@ export default function Home() {
               Integrated Offshore Capabilities
             </h2>
             <p className="text-white/55 text-base max-w-2xl leading-relaxed">
-              From engineered subsea products to full-scale drilling operations, we provide end-to-end solutions for the global offshore energy industry.
+              NorthWave Energy Drilling operates across offshore and deepwater environments, delivering engineering, drilling support, and subsea operations for complex energy projects.
             </p>
           </div>
 
