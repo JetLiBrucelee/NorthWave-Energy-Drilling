@@ -49,9 +49,9 @@ import img6 from "@assets/Screenshot_2026-06-29_at_11.11.48_AM_1782745943545.png
 import img7 from "@assets/Screenshot_2026-06-29_at_11.11.59_AM_1782745943545.png";
 
 const VIDEOS = [
-  { id: "b22oskjrQ14", title: "Offshore Drilling Operations", desc: "Deep sea rig mobilization and platform setup" },
-  { id: "B_v18urbHTg", title: "Subsea Pipeline Installation", desc: "SURF installation in extreme-depth conditions" },
-  { id: "HQ8DcHM_7S0", title: "Heavy Lift and Deck Operations", desc: "Crane operations and cargo handling aboard an offshore production facility" },
+  { id: "P-OkruGPco4", title: "Offshore Drilling Operations", desc: "Deep sea rig mobilization and platform setup" },
+  { id: "Vcl1PLxjl2s", title: "Subsea Pipeline Installation", desc: "SURF installation in extreme-depth conditions" },
+  { id: "PCGeQdZpO6A", title: "Heavy Lift and Deck Operations", desc: "Crane operations and cargo handling aboard an offshore production facility" },
 ];
 
 export default function Projects() {
