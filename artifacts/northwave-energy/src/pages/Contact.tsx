@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
+import { formatPhone } from "@/lib/formatPhone";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -88,8 +89,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="text-white/35 text-xs font-semibold uppercase tracking-widest mb-1">Dispatch & Comm</p>
-                      <p className="text-white/80 text-sm font-medium">{settings?.phone1 || "+1 (555) 019-8472"}</p>
-                      {settings?.phone2 && <p className="text-white/80 text-sm font-medium">{settings.phone2}</p>}
+                      <p className="text-white/80 text-sm font-medium">{settings?.phone1 ? formatPhone(settings.phone1) : "(904) 222-4690"}</p>
+                      {settings?.phone2 && <p className="text-white/80 text-sm font-medium">{formatPhone(settings.phone2)}</p>}
                     </div>
                   </div>
 

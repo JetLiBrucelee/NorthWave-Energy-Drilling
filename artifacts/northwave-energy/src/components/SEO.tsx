@@ -65,7 +65,7 @@ export const organizationJsonLd = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+1-713-555-0182",
+    telephone: "+1-904-222-4690",
     contactType: "customer service",
     email: "support@northwaveenergy.com",
   },

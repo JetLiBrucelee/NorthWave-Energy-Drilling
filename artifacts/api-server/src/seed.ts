@@ -20,9 +20,9 @@ export async function seedDatabase() {
     const defaultSettings = [
       { key: "contactEmail", value: "support@northwaveenergy.com" },
       { key: "address", value: "1200 Offshore Drive, Suite 400, Houston, TX 77002" },
-      { key: "phone1", value: "+1 (713) 555-0182" },
-      { key: "phone2", value: "+1 (713) 555-0199" },
-      { key: "ceoName", value: "James R. Hartwell" },
+      { key: "phone1", value: "9042224690" },
+      { key: "phone2", value: "9048556246" },
+      { key: "ceoName", value: "Micah Oakley" },
       { key: "ceoPhotoUrl", value: "" },
     ];
     for (const setting of defaultSettings) {

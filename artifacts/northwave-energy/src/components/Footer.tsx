@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useGetSiteSettings } from "@workspace/api-client-react";
 import { LogoFull } from "@/components/Logo";
+import { formatPhone } from "@/lib/formatPhone";
 
 export function Footer() {
   const { data: settings } = useGetSiteSettings();
@@ -54,7 +55,7 @@ export function Footer() {
             <ul className="space-y-2.5 pt-2">
               <li className="flex items-center gap-3 text-sm text-white/55">
                 <Phone size={14} className="text-primary shrink-0" />
-                <span>{settings?.phone1 || "+1 (555) 019-8472"}</span>
+                <span>{settings?.phone1 ? formatPhone(settings.phone1) : "(904) 222-4690"}</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-white/55">
                 <Mail size={14} className="text-primary shrink-0" />
