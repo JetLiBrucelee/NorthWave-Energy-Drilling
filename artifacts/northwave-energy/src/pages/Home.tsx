@@ -96,13 +96,13 @@ export default function Home() {
             className="max-w-2xl"
           >
             <p className="text-primary text-sm font-semibold tracking-[0.18em] uppercase mb-4">
-              Offshore Operations
+              NorthWave Operations
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-white leading-[1.1] mb-6">
-              Delivering Excellence in Deepwater Operations
+              Precision Drilling at the Frontier of the Possible
             </h1>
             <p className="text-white/70 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-              Operating the world's most advanced floating production facilities with an industry-leading safety and uptime record.
+              From the Arctic shelf to ultra-deep basins, NorthWave crews operate at the limits of depth, weather, and pressure — and deliver every time.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
