@@ -23,7 +23,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LogOut, Save, Plus, Trash2, Edit, X, Upload } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, Edit, Upload } from "lucide-react";
+import { formatPhone } from "@/lib/formatPhone";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 
 // Schemas
@@ -193,7 +194,7 @@ export default function AdminDashboard() {
 
   return (
     <Layout>
-      <SEO title="Command Center | NorthWave Energy" description="Admin dashboard for managing site content." url="/admin/dashboard" />
+      <SEO title="Command Center | NorthWave Energy" description="Admin dashboard for managing site content." url="/admin/dashboard" robots="noindex, nofollow" />
       
       <div className="bg-slate-950 border-b border-slate-800 py-8">
         <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
@@ -324,7 +325,7 @@ export default function AdminDashboard() {
                           <td className="px-6 py-4 font-mono text-muted-foreground">{worker.sortOrder}</td>
                           <td className="px-6 py-4 font-bold uppercase">{worker.name}</td>
                           <td className="px-6 py-4 text-primary font-semibold">{worker.role || "N/A"}</td>
-                          <td className="px-6 py-4">{worker.phone}</td>
+                          <td className="px-6 py-4 font-mono tracking-wide">{formatPhone(worker.phone)}</td>
                           <td className="px-6 py-4 text-right space-x-2">
                             <button onClick={() => openEditWorker(worker)} className="p-2 text-slate-500 hover:text-primary transition-colors bg-background border border-border rounded-sm">
                               <Edit size={14} />

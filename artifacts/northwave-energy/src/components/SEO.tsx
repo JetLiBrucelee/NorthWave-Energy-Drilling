@@ -6,12 +6,13 @@ interface SEOProps {
   image?: string;
   url?: string;
   jsonLd?: object;
+  robots?: string;
 }
 
 const SITE_URL = "https://northwaveenergydrilling.com";
 const DEFAULT_IMAGE = "/opengraph.jpg";
 
-export function SEO({ title, description, image, url, jsonLd }: SEOProps) {
+export function SEO({ title, description, image, url, jsonLd, robots = "index, follow" }: SEOProps) {
   const canonicalUrl = url ? `${SITE_URL}${url}` : SITE_URL;
   const ogImage = image || DEFAULT_IMAGE;
 
@@ -19,7 +20,7 @@ export function SEO({ title, description, image, url, jsonLd }: SEOProps) {
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={robots} />
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph */}

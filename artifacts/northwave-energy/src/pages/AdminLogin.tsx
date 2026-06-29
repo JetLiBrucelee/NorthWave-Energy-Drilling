@@ -56,7 +56,7 @@ export default function AdminLogin() {
 
   return (
     <Layout>
-      <SEO title="Secure Access | NorthWave Energy" description="Authorized personnel only." url="/admin" />
+      <SEO title="Secure Access | NorthWave Energy" description="Authorized personnel only." url="/admin" robots="noindex, nofollow" />
       
       <div className="min-h-[calc(100vh-88px)] bg-slate-950 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-card border border-slate-800 p-8 shadow-2xl relative rounded-sm">

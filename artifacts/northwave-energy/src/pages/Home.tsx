@@ -38,8 +38,8 @@ export default function Home() {
             {/* Pexels CC0 offshore drilling footage */}
             <source src="https://videos.pexels.com/video-files/3249060/3249060-sd_640_360_25fps.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/30"></div>
         </div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -49,17 +49,17 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-primary/30 bg-primary/10 backdrop-blur-sm mb-6 rounded-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-primary/50 bg-primary/20 backdrop-blur-sm mb-6 rounded-sm">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              <span className="text-xs font-bold uppercase tracking-widest text-primary">Global Offshore Operations</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow">Global Offshore Operations</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-heading font-extrabold text-white leading-[1.1] mb-6 uppercase tracking-tight text-shadow-sm">
+            <h1 className="text-5xl md:text-7xl font-heading font-extrabold text-white leading-[1.1] mb-6 uppercase tracking-tight drop-shadow-lg">
               Conquering the <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-300">Deep Ocean</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed border-l-4 border-primary pl-6">
+            <p className="text-lg md:text-xl text-slate-200 mb-8 max-w-2xl leading-relaxed border-l-4 border-primary pl-6 drop-shadow">
               NorthWave Energy Drilling provides heavy-duty offshore solutions. 
               Built for extreme conditions. Engineered for maximum yield. We execute $50M+ contracts with zero compromises.
             </p>

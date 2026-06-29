@@ -3,6 +3,7 @@ import { SEO, organizationJsonLd } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { useGetSiteSettings, useListWorkers } from "@workspace/api-client-react";
 import { Phone, CheckCircle } from "lucide-react";
+import { formatPhone } from "@/lib/formatPhone";
 
 // Images
 import twoWorkers from "@assets/Screenshot_2026-06-29_at_11.11.33_AM_1782745943544.png";
@@ -13,9 +14,10 @@ export default function About() {
   const { data: workers } = useListWorkers();
 
   // Helper to construct CEO photo URL
-  const ceoPhotoUrl = settings?.ceoPhotoUrl 
-    ? `/api/storage${settings.ceoPhotoUrl}` 
-    : "https://ui-avatars.com/api/?name=" + encodeURIComponent(settings?.ceoName || "CEO") + "&background=1e293b&color=fff&size=256";
+  // objectPath from storage typically looks like "/objects/bucket/..." so prepend /api/storage
+  const ceoPhotoUrl = settings?.ceoPhotoUrl
+    ? (settings.ceoPhotoUrl.startsWith("http") ? settings.ceoPhotoUrl : `/api/storage${settings.ceoPhotoUrl}`)
+    : null;
 
   return (
     <Layout>
@@ -97,11 +99,20 @@ export default function About() {
       <section className="py-24 bg-muted border-y border-border">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-background p-8 md:p-12 shadow-xl border-l-8 border-primary rounded-sm">
-            <img 
-              src={ceoPhotoUrl} 
-              alt={settings?.ceoName || "CEO"} 
-              className="w-48 h-48 rounded-full object-cover shadow-inner grayscale hover:grayscale-0 transition-all duration-500 border-4 border-muted"
-            />
+            {/* CEO portrait — fixed aspect ratio container so real photos display correctly */}
+            <div className="shrink-0 w-48 h-48 rounded-full overflow-hidden border-4 border-muted shadow-xl bg-slate-800 flex items-center justify-center">
+              {ceoPhotoUrl ? (
+                <img
+                  src={ceoPhotoUrl}
+                  alt={settings?.ceoName || "CEO"}
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-slate-800 text-slate-300 text-5xl font-heading font-black">
+                  {(settings?.ceoName || "C").charAt(0).toUpperCase()}
+                </div>
+              )}
+            </div>
             <div>
               <h2 className="text-sm font-bold uppercase tracking-widest text-primary mb-2">Leadership</h2>
               <h3 className="text-3xl font-heading font-bold uppercase tracking-tight text-foreground mb-4">
@@ -149,8 +160,10 @@ export default function About() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Phone size={14} />
-                    <a href={`tel:${worker.phone}`} className="hover:text-foreground transition-colors">{worker.phone}</a>
+                    <Phone size={14} className="shrink-0" />
+                    <a href={`tel:${worker.phone}`} className="hover:text-foreground transition-colors font-mono tracking-wide">
+                      {formatPhone(worker.phone)}
+                    </a>
                   </div>
                 </div>
               ))}

@@ -1,7 +1,8 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
-import { Menu, X, Anchor } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { LogoFull } from "@/components/Logo";
 
 export function Navbar() {
   const [location] = useLocation();
@@ -27,23 +28,15 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm py-3" : "bg-transparent py-5"
+        scrolled
+          ? "bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-sm py-3"
+          : "bg-slate-950/70 backdrop-blur-sm py-5"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-primary text-primary-foreground p-2 rounded-sm group-hover:scale-105 transition-transform duration-300">
-              <Anchor size={24} strokeWidth={2.5} />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading font-bold text-xl leading-none text-foreground tracking-wider">
-                NORTHWAVE
-              </span>
-              <span className="text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
-                Energy Drilling
-              </span>
-            </div>
+          <Link href="/" className="group">
+            <LogoFull variant="light" />
           </Link>
 
           {/* Desktop Nav */}
@@ -69,7 +62,7 @@ export function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-foreground p-2"
+            className="md:hidden text-white p-2 rounded-sm hover:bg-white/10 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
