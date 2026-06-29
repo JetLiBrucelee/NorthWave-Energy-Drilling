@@ -16,17 +16,27 @@ export async function seedDatabase() {
       logger.info("Seeded admin user: support@northwaveenergy.com");
     }
 
-    // Seed default site settings
+    // Seed default site settings (insert only if not already present)
     const defaultSettings = [
       { key: "contactEmail", value: "support@northwaveenergy.com" },
       { key: "address", value: "1200 Offshore Drive, Suite 400, Houston, TX 77002" },
-      { key: "phone1", value: "9042224690" },
-      { key: "phone2", value: "9048556246" },
-      { key: "ceoName", value: "Micah Oakley" },
       { key: "ceoPhotoUrl", value: "" },
     ];
     for (const setting of defaultSettings) {
       await db.insert(siteSettingsTable).values(setting).onConflictDoNothing();
+    }
+
+    // Always enforce real business values (overwrite stale placeholders on every startup)
+    const realValues = [
+      { key: "ceoName", value: "Micah Oakley" },
+      { key: "phone1", value: "9042224690" },
+      { key: "phone2", value: "9048556246" },
+    ];
+    for (const setting of realValues) {
+      await db
+        .insert(siteSettingsTable)
+        .values(setting)
+        .onConflictDoUpdate({ target: siteSettingsTable.key, set: { value: setting.value } });
     }
 
     // Seed workers
