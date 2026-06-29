@@ -5,7 +5,9 @@
  * NorthWave Energy Drilling API
  * OpenAPI spec version: 0.1.0
  */
+import type { AuthResultAdmin } from './authResultAdmin';
 
-export interface HealthStatus {
-  status: string;
+export interface AuthResult {
+  message: string;
+  admin: AuthResultAdmin;
 }
