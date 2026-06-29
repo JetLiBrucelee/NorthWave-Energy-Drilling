@@ -100,6 +100,13 @@ export default function About() {
                 <p>
                   We are committed to integrity, safety, and performance. Every project is approached with discipline, technical expertise, and a dedication to long-term reliability in the energy sector.
                 </p>
+                <p className="font-semibold text-white/75 pt-1">Global Presence</p>
+                <p>NorthWave operates across multiple offshore regions, supporting energy infrastructure in:</p>
+                <ul className="list-disc list-inside space-y-1 pl-1">
+                  <li>Arctic offshore zones</li>
+                  <li>Gulf basin developments</li>
+                  <li>Atlantic deepwater corridors</li>
+                </ul>
               </div>
               <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-white/[0.07]">
                 {values.map((value, i) => (
@@ -136,7 +143,13 @@ export default function About() {
               <h3 className="text-2xl font-bold text-white mb-1">
                 {settings?.ceoName || "Chief Executive Officer"}
               </h3>
-              <p className="text-white/35 text-sm font-medium mb-4">CEO & Founder, NorthWave Energy</p>
+              <p className="text-white/35 text-sm font-medium mb-2">CEO & Founder, NorthWave Energy</p>
+              <p className="flex items-center gap-2 text-white/55 text-sm mb-4">
+                <Phone size={13} className="shrink-0 text-primary" />
+                <a href={`tel:${settings?.phone2 || "9048556246"}`} className="hover:text-white transition-colors font-mono tracking-wide">
+                  {formatPhone(settings?.phone2 || "9048556246")}
+                </a>
+              </p>
               <p className="text-white/60 text-sm leading-relaxed italic">
                 "Our reputation is built on the cold, hard steel of our rigs and the unbreakable resolve of our crews. We don't make excuses; we make well completions happen."
               </p>
