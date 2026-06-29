@@ -24,10 +24,10 @@ export function Footer() {
   ];
 
   const safetyLinks = [
-    { href: "/contact", label: "Safety Standards" },
+    { href: "/services#platform-maintenance", label: "Safety Standards" },
     { href: "/contact", label: "Environmental Policy" },
-    { href: "/contact", label: "Health & Safety" },
-    { href: "/contact", label: "ISO Certifications" },
+    { href: "/services#underwater-inspection", label: "Health & Safety" },
+    { href: "/services#equipment-rental", label: "ISO Certifications" },
     { href: "/contact", label: "Compliance" },
   ];
 
@@ -81,29 +81,29 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Services — use native <a> so hash anchors scroll correctly */}
           <div>
             <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-5">Services</h4>
             <ul className="space-y-3">
               {serviceLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
+                  <a href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Safety & Quality */}
+          {/* Safety & Quality — also use native <a> for hash links */}
           <div>
             <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-5">Safety & Quality</h4>
             <ul className="space-y-3">
               {safetyLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
+                  <a href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

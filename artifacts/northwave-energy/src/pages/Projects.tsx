@@ -15,7 +15,7 @@ import img7 from "@assets/Screenshot_2026-06-29_at_11.11.59_AM_1782745943545.png
 const VIDEOS = [
   { id: "G9H8h-a_Lzo", title: "Offshore Drilling Operations", desc: "Deep sea rig mobilization and platform setup" },
   { id: "mkZn-N8UJBU", title: "Subsea Pipeline Installation", desc: "SURF installation in extreme-depth conditions" },
-  { id: "PCGeQdZpO6A", title: "Heavy Lift & Well Completion", desc: "Top drive installation and wellbore completion sequence" },
+  { id: "kMIwQUSaGgA", title: "Platform Operations & Maintenance", desc: "Day-to-day operations aboard a modern offshore production platform" },
 ];
 
 export default function Projects() {

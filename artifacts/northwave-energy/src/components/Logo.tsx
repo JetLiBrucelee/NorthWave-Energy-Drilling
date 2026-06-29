@@ -5,7 +5,7 @@ interface LogoProps {
 
 export function LogoIcon({ size = "md", variant = "dark" }: LogoProps) {
   const dim = size === "sm" ? 28 : size === "lg" ? 48 : 36;
-  const color = variant === "light" ? "#ffffff" : "#0ca8e3";
+  const color = variant === "light" ? "#ffffff" : "#3474f4";
   return (
     <svg width={dim} height={dim} viewBox="0 0 40 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M20 2 L36 36 L4 36 Z" stroke={color} strokeWidth="2.2" fill="none" strokeLinejoin="round" strokeLinecap="round"/>
@@ -21,7 +21,7 @@ export function LogoIcon({ size = "md", variant = "dark" }: LogoProps) {
 export function LogoFull({ variant = "dark" }: LogoProps) {
   const textColor = variant === "light" ? "#ffffff" : "#f0f6fc";
   const subColor = variant === "light" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.5)";
-  const accentColor = "#0ca8e3";
+  const accentColor = "#3474f4";
   return (
     <div className="flex items-center gap-2.5 select-none">
       <div className="shrink-0">
