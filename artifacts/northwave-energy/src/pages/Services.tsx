@@ -47,7 +47,7 @@ export default function Services() {
       icon: Settings,
       title: "Heavy Equipment Rental",
       description: "Leasing of certified blowout preventers (BOPs), top drives, and specialized heavy lifting gear for offshore platforms.",
-      detail: "Our rental fleet includes Cameron and NOV BOPs, Varco/TDS top drives, and Liebherr offshore cranes — all maintained to OEM specifications with full certification documentation.",
+      detail: "Our rental fleet includes Cameron and NOV BOPs, Varco/TDS top drives, and Liebherr offshore cranes, all maintained to OEM specifications with full certification documentation.",
     },
   ];
 

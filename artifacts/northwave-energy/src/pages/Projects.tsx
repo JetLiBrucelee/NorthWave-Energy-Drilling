@@ -15,20 +15,20 @@ import img7 from "@assets/Screenshot_2026-06-29_at_11.11.59_AM_1782745943545.png
 const VIDEOS = [
   { id: "G9H8h-a_Lzo", title: "Offshore Drilling Operations", desc: "Deep sea rig mobilization and platform setup" },
   { id: "mkZn-N8UJBU", title: "Subsea Pipeline Installation", desc: "SURF installation in extreme-depth conditions" },
-  { id: "kMIwQUSaGgA", title: "Platform Operations & Maintenance", desc: "Day-to-day operations aboard a modern offshore production platform" },
+  { id: "nQ3nGMEy1-0", title: "Heavy Lift and Deck Operations", desc: "Crane operations and cargo handling aboard an offshore production facility" },
 ];
 
 export default function Projects() {
   const [selectedImg, setSelectedImg] = useState<{ src: string; caption: string } | null>(null);
 
   const gallery = [
-    { src: img2, caption: "Deepwater Rig Alpha — Sunset Operations", span: "col-span-1 md:col-span-2 row-span-2" },
+    { src: img2, caption: "Deepwater Rig Alpha, Sunset Operations", span: "col-span-1 md:col-span-2 row-span-2" },
     { src: img3, caption: "Crane Maintenance and Supply Transfer", span: "col-span-1" },
     { src: img4, caption: "Saturation Dive Bell Deployment", span: "col-span-1" },
-    { src: img6, caption: "Supply Vessel Transit — North Sea", span: "col-span-1 md:col-span-2" },
+    { src: img6, caption: "Supply Vessel Transit, North Sea", span: "col-span-1 md:col-span-2" },
     { src: img5, caption: "Top Drive Inspection", span: "col-span-1" },
-    { src: img1, caption: "Crew Logistics — Port Docking", span: "col-span-1" },
-    { src: img7, caption: "Pipeline Laying Operations — Aerial View", span: "col-span-1 md:col-span-2" },
+    { src: img1, caption: "Crew Logistics, Port Docking", span: "col-span-1" },
+    { src: img7, caption: "Pipeline Laying Operations, Aerial View", span: "col-span-1 md:col-span-2" },
   ];
 
   return (

@@ -67,7 +67,7 @@ export default function Home() {
     <Layout>
       <SEO
         title="NorthWave Energy Drilling | Offshore Drilling Experts"
-        description="NorthWave Energy Drilling — delivering precision offshore drilling, well completion, and subsea operations across the world's most challenging environments."
+        description="NorthWave Energy Drilling: precision offshore drilling, well completion, and subsea operations across the world's most challenging environments."
         url="/"
         jsonLd={organizationJsonLd}
       />
@@ -102,7 +102,7 @@ export default function Home() {
               Precision Drilling at the Frontier of the Possible
             </h1>
             <p className="text-white/70 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-              From the Arctic shelf to ultra-deep basins, NorthWave crews operate at the limits of depth, weather, and pressure — and deliver every time.
+              From the Arctic shelf to ultra-deep basins, NorthWave crews operate at the limits of depth, weather and pressure, delivering results every single time.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link

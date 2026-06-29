@@ -105,19 +105,24 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Map placeholder */}
-              <div className="w-full h-56 bg-card border border-white/[0.07] rounded-lg relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'1\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'1\'/%3E%3C/g%3E%3C/svg%3E")'}}></div>
-                <div className="bg-card/80 border border-white/[0.07] rounded-lg px-4 py-2.5 flex items-center gap-2 text-white/60 text-sm font-semibold">
-                  <MapPin size={16} className="text-primary" /> Houston, TX 77002
-                </div>
+              {/* Map embed — OpenStreetMap dark-filtered to match navy design */}
+              <div className="w-full h-56 rounded-lg overflow-hidden border border-white/[0.07]">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.1)" }}
+                  loading="lazy"
+                  allowFullScreen
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-95.385%2C29.748%2C-95.355%2C29.762&layer=mapnik&marker=29.7558%2C-95.3674"
+                  title="NorthWave Energy Drilling, Houston Office"
+                />
               </div>
 
               {/* Regional offices */}
               <div>
                 <h3 className="text-sm font-bold text-white/35 uppercase tracking-widest mb-3">Regional Offices</h3>
                 <div className="space-y-2">
-                  {["Houston, TX, USA — Operations HQ", "Aberdeen, Scotland — North Sea Division", "Anchorage, AK, USA — Arctic Operations"].map((office) => (
+                  {["Houston, TX, USA: Operations HQ", "Aberdeen, Scotland: North Sea Division", "Anchorage, AK, USA: Arctic Operations"].map((office) => (
                     <div key={office} className="flex items-center gap-3 text-white/55 text-sm">
                       <div className="w-1.5 h-1.5 bg-primary rounded-full shrink-0"></div>
                       {office}
