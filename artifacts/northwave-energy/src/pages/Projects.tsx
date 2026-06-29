@@ -31,6 +31,7 @@ export default function Projects() {
       <SEO 
         title="Project Gallery | NorthWave Energy Drilling"
         description="Visual showcase of NorthWave Energy Drilling's offshore operations, rigs, and crew in action."
+        url="/projects"
       />
       
       <section className="bg-slate-900 py-16 border-b border-slate-800">

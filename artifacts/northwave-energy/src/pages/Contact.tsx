@@ -56,6 +56,7 @@ export default function Contact() {
       <SEO 
         title="Contact Us | NorthWave Energy Drilling"
         description="Get in touch with NorthWave Energy Drilling for consultation on your next major offshore project."
+        url="/contact"
       />
       
       <section className="bg-slate-900 py-16 border-b border-slate-800">

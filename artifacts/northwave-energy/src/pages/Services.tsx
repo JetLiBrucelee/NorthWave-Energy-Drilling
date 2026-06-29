@@ -49,6 +49,7 @@ export default function Services() {
       <SEO 
         title="Services | NorthWave Energy Drilling"
         description="Comprehensive offshore drilling services including directional drilling, platform maintenance, and subsea inspection."
+        url="/services"
       />
       
       {/* Header */}

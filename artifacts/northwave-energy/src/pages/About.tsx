@@ -22,6 +22,7 @@ export default function About() {
       <SEO 
         title="About Us | NorthWave Energy Drilling"
         description="Learn about our history, our leadership, and the expert crew that makes NorthWave a leader in offshore drilling."
+        url="/about"
       />
       
       {/* Header */}

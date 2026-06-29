@@ -9,7 +9,7 @@ interface SEOProps {
 }
 
 const SITE_URL = "https://northwaveenergydrilling.com";
-const DEFAULT_IMAGE = "/og-image.jpg";
+const DEFAULT_IMAGE = "/opengraph.jpg";
 
 export function SEO({ title, description, image, url, jsonLd }: SEOProps) {
   const canonicalUrl = url ? `${SITE_URL}${url}` : SITE_URL;
@@ -27,7 +27,7 @@ export function SEO({ title, description, image, url, jsonLd }: SEOProps) {
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:image" content={`${SITE_URL}${ogImage}`} />
       <meta property="og:site_name" content="NorthWave Energy Drilling" />
 
       {/* Twitter Card */}
@@ -35,7 +35,7 @@ export function SEO({ title, description, image, url, jsonLd }: SEOProps) {
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={`${SITE_URL}${ogImage}`} />
 
       {/* JSON-LD */}
       {jsonLd && (
@@ -52,7 +52,7 @@ export const organizationJsonLd = {
   "@type": "Organization",
   name: "NorthWave Energy Drilling",
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.svg`,
+  logo: `${SITE_URL}/favicon.svg`,
   description: "Heavyweight offshore energy company delivering precision drilling, well completion, platform maintenance, and deepwater operations worldwide.",
   address: {
     "@type": "PostalAddress",
@@ -68,5 +68,4 @@ export const organizationJsonLd = {
     contactType: "customer service",
     email: "support@northwaveenergy.com",
   },
-  sameAs: [],
 };

@@ -193,7 +193,7 @@ export default function AdminDashboard() {
 
   return (
     <Layout>
-      <SEO title="Command Center | NorthWave" description="Admin Dashboard" />
+      <SEO title="Command Center | NorthWave Energy" description="Admin dashboard for managing site content." url="/admin/dashboard" />
       
       <div className="bg-slate-950 border-b border-slate-800 py-8">
         <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
