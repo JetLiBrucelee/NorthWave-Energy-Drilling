@@ -76,10 +76,29 @@ export default function About() {
               </div>
               <div className="space-y-4 text-white/55 leading-relaxed text-sm">
                 <p>
-                  NorthWave was founded on a simple premise: offshore drilling is unforgiving, and the companies operating in it must be uncompromising. We don't just supply equipment; we supply certainty.
+                  Northwave Energy Drilling is an offshore energy services and drilling support company specializing in the construction, installation, and maintenance of critical oil and gas infrastructure in challenging environments. Our operations are focused on delivering safe, efficient, and reliable solutions for offshore and onshore energy projects.
                 </p>
                 <p>
-                  When you contract NorthWave, you're getting a hardened team of veterans who treat every rig, every pipeline, and every dive as a mission-critical operation.
+                  With a strong emphasis on safety, precision, and operational excellence, Northwave Energy Drilling supports a wide range of engineering and field services including rig installation support, subsea system integration, control and power system commissioning, and offshore equipment deployment.
+                </p>
+                <p>
+                  Our team consists of experienced field engineers and offshore specialists who understand the demands of high-pressure environments and complex marine operations. We take pride in executing projects with strict adherence to industry safety standards and environmental responsibility.
+                </p>
+                <p className="font-semibold text-white/75 pt-1">Our Core Services</p>
+                <ul className="list-disc list-inside space-y-1 pl-1">
+                  <li>Offshore drilling support operations</li>
+                  <li>Rig installation and commissioning assistance</li>
+                  <li>Control and electrical systems integration</li>
+                  <li>Maintenance and equipment optimization</li>
+                  <li>Marine and offshore logistics support</li>
+                </ul>
+                <p className="font-semibold text-white/75 pt-1">Project Experience</p>
+                <p>
+                  Northwave Energy Drilling has contributed to multiple offshore development projects, supporting installation phases, system upgrades, and operational readiness activities across various marine energy sites. Our focus is always on ensuring systems are delivered safely, on time, and fully operational for production readiness.
+                </p>
+                <p className="font-semibold text-white/75 pt-1">Our Commitment</p>
+                <p>
+                  We are committed to integrity, safety, and performance. Every project is approached with discipline, technical expertise, and a dedication to long-term reliability in the energy sector.
                 </p>
               </div>
               <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-white/[0.07]">

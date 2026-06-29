@@ -246,20 +246,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Global stats */}
-          <div className="bg-card border border-white/[0.07] rounded-lg grid grid-cols-2 md:grid-cols-4 divide-x divide-white/[0.07]">
-            {[
-              { value: "25+", label: "Active Projects" },
-              { value: "3", label: "Major Regions" },
-              { value: "3", label: "Countries" },
-              { value: "24/7", label: "Operations Center" },
-            ].map((s, i) => (
-              <div key={i} className="text-center py-8 px-4">
-                <div className="text-3xl font-bold text-white mb-1">{s.value}</div>
-                <div className="text-[11px] uppercase tracking-widest font-semibold text-white/45">{s.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
