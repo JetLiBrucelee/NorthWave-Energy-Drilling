@@ -46,7 +46,7 @@ router.post("/contact", async (req, res): Promise<void> => {
 
   try {
     await resend.emails.send({
-      from: "NorthWave Energy <onboarding@resend.dev>",
+      from: "NorthWave Energy <support@northwaveenergy.com>",
       to: [toEmail],
       replyTo: email,
       subject: `[NorthWave Contact] ${subject}`,
