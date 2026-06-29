@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { Resend } from "resend";
-import { db, siteSettingsTable } from "@workspace/db";
+import { db, siteSettingsTable, contactsTable } from "@workspace/db";
 import { SubmitContactBody } from "@workspace/api-zod";
 
 const router: IRouter = Router();
@@ -26,6 +26,13 @@ router.post("/contact", async (req, res): Promise<void> => {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
+
+  // Always save to DB first so the message is never lost
+  try {
+    await db.insert(contactsTable).values({ name, email, subject, message });
+  } catch (dbErr) {
+    req.log.error({ dbErr }, "Failed to save contact to database");
+  }
 
   try {
     await resend.emails.send({

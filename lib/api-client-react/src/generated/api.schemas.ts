@@ -86,6 +86,20 @@ export interface ContactSubmission {
   message: string;
 }
 
+export interface ContactInquiry {
+  id: number;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  isRead: boolean;
+  createdAt?: string;
+}
+
+export interface ContactInquiryPatch {
+  isRead: boolean;
+}
+
 export interface UploadRequest {
   name: string;
   size: number;

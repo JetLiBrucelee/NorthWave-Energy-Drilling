@@ -155,6 +155,53 @@ export const DeleteWorkerResponse = zod.void()
 
 
 /**
+ * @summary List all contact inquiries (admin only)
+ */
+export const ListContactInquiriesResponseItem = zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "subject": zod.string(),
+  "message": zod.string(),
+  "isRead": zod.boolean(),
+  "createdAt": zod.string().optional()
+})
+export const ListContactInquiriesResponse = zod.array(ListContactInquiriesResponseItem)
+
+
+/**
+ * @summary Mark a contact inquiry as read/unread (admin only)
+ */
+export const PatchContactInquiryParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const PatchContactInquiryBody = zod.object({
+  "isRead": zod.boolean()
+})
+
+export const PatchContactInquiryResponse = zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "subject": zod.string(),
+  "message": zod.string(),
+  "isRead": zod.boolean(),
+  "createdAt": zod.string().optional()
+})
+
+
+/**
+ * @summary Delete a contact inquiry (admin only)
+ */
+export const DeleteContactInquiryParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const DeleteContactInquiryResponse = zod.void()
+
+
+/**
  * @summary Submit contact form
  */
 export const SubmitContactBody = zod.object({

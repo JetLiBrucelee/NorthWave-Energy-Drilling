@@ -23,6 +23,8 @@ import type {
   AdminSession,
   AuthResult,
   ContactSubmission,
+  ContactInquiry,
+  ContactInquiryPatch,
   ErrorResponse,
   HealthStatus,
   LoginCredentials,
@@ -930,6 +932,113 @@ export const useRequestUploadUrl = <TError = ErrorType<ErrorResponse>,
       > => {
       return useMutation(getRequestUploadUrlMutationOptions(options));
     }
+
+export const getListContactInquiriesUrl = () => {
+  return `/api/admin/contacts`
+}
+
+export const listContactInquiries = async (options?: RequestInit): Promise<ContactInquiry[]> => {
+  return customFetch<ContactInquiry[]>(getListContactInquiriesUrl(), {
+    ...options,
+    method: 'GET'
+  });
+}
+
+export const getListContactInquiriesQueryKey = () => {
+  return [`/api/admin/contacts`] as const;
+}
+
+export const getListContactInquiriesQueryOptions = <TData = Awaited<ReturnType<typeof listContactInquiries>>, TError = ErrorType<unknown>>(options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof listContactInquiries>>, TError, TData>, request?: SecondParameter<typeof customFetch> }) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getListContactInquiriesQueryKey();
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listContactInquiries>>> = ({ signal }) => listContactInquiries({ signal, ...requestOptions });
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof listContactInquiries>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListContactInquiriesQueryResult = NonNullable<Awaited<ReturnType<typeof listContactInquiries>>>
+export type ListContactInquiriesQueryError = ErrorType<unknown>
+
+export function useListContactInquiries<TData = Awaited<ReturnType<typeof listContactInquiries>>, TError = ErrorType<unknown>>(
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof listContactInquiries>>, TError, TData>, request?: SecondParameter<typeof customFetch> }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListContactInquiriesQueryOptions(options)
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+export const getPatchContactInquiryUrl = (id: number) => {
+  return `/api/admin/contacts/${id}`
+}
+
+export const patchContactInquiry = async (id: number, contactInquiryPatch: ContactInquiryPatch, options?: RequestInit): Promise<ContactInquiry> => {
+  return customFetch<ContactInquiry>(getPatchContactInquiryUrl(id), {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(contactInquiryPatch)
+  });
+}
+
+export const getPatchContactInquiryMutationOptions = <TError = ErrorType<ErrorResponse>, TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchContactInquiry>>, TError, { id: number; data: BodyType<ContactInquiryPatch> }, TContext>, request?: SecondParameter<typeof customFetch> }): UseMutationOptions<Awaited<ReturnType<typeof patchContactInquiry>>, TError, { id: number; data: BodyType<ContactInquiryPatch> }, TContext> => {
+  const mutationKey = ['patchContactInquiry'];
+  const { mutation: mutationOptions, request: requestOptions } = options ?
+    options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchContactInquiry>>, { id: number; data: BodyType<ContactInquiryPatch> }> = (props) => {
+    const { id, data } = props ?? {};
+    return patchContactInquiry(id, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type PatchContactInquiryMutationResult = NonNullable<Awaited<ReturnType<typeof patchContactInquiry>>>
+export type PatchContactInquiryMutationBody = BodyType<ContactInquiryPatch>
+export type PatchContactInquiryMutationError = ErrorType<ErrorResponse>
+
+export const usePatchContactInquiry = <TError = ErrorType<ErrorResponse>, TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchContactInquiry>>, TError, { id: number; data: BodyType<ContactInquiryPatch> }, TContext>, request?: SecondParameter<typeof customFetch> }): UseMutationResult<Awaited<ReturnType<typeof patchContactInquiry>>, TError, { id: number; data: BodyType<ContactInquiryPatch> }, TContext> => {
+  return useMutation(getPatchContactInquiryMutationOptions(options));
+}
+
+
+export const getDeleteContactInquiryUrl = (id: number) => {
+  return `/api/admin/contacts/${id}`
+}
+
+export const deleteContactInquiry = async (id: number, options?: RequestInit): Promise<void> => {
+  return customFetch<void>(getDeleteContactInquiryUrl(id), {
+    ...options,
+    method: 'DELETE'
+  });
+}
+
+export const getDeleteContactInquiryMutationOptions = <TError = ErrorType<ErrorResponse>, TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteContactInquiry>>, TError, { id: number }, TContext>, request?: SecondParameter<typeof customFetch> }): UseMutationOptions<Awaited<ReturnType<typeof deleteContactInquiry>>, TError, { id: number }, TContext> => {
+  const mutationKey = ['deleteContactInquiry'];
+  const { mutation: mutationOptions, request: requestOptions } = options ?
+    options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteContactInquiry>>, { id: number }> = (props) => {
+    const { id } = props ?? {};
+    return deleteContactInquiry(id, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type DeleteContactInquiryMutationResult = NonNullable<Awaited<ReturnType<typeof deleteContactInquiry>>>
+export type DeleteContactInquiryMutationError = ErrorType<ErrorResponse>
+
+export const useDeleteContactInquiry = <TError = ErrorType<ErrorResponse>, TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteContactInquiry>>, TError, { id: number }, TContext>, request?: SecondParameter<typeof customFetch> }): UseMutationResult<Awaited<ReturnType<typeof deleteContactInquiry>>, TError, { id: number }, TContext> => {
+  return useMutation(getDeleteContactInquiryMutationOptions(options));
+}
+
 
 export const getGetStorageObjectUrl = (objectPath: string,) => {
 

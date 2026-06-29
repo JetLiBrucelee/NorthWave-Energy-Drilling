@@ -99,7 +99,7 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
 
   // Validate on mutating requests to admin-guarded paths.
   const mutating = ["POST", "PUT", "PATCH", "DELETE"];
-  const adminPaths = ["/api/auth/login", "/api/auth/logout", "/api/settings", "/api/workers", "/api/storage/uploads"];
+  const adminPaths = ["/api/auth/login", "/api/auth/logout", "/api/settings", "/api/workers", "/api/storage/uploads", "/api/admin/contacts"];
   const requiresCsrf = mutating.includes(req.method) &&
     adminPaths.some((p) => req.path.startsWith(p));
 

@@ -12,8 +12,12 @@ import {
   useUpdateWorker,
   useDeleteWorker,
   useRequestUploadUrl,
+  useListContactInquiries,
+  usePatchContactInquiry,
+  useDeleteContactInquiry,
   getListWorkersQueryKey,
-  getGetSiteSettingsQueryKey
+  getGetSiteSettingsQueryKey,
+  getListContactInquiriesQueryKey
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -23,7 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LogOut, Save, Plus, Trash2, Edit, Upload } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, Edit, Upload, Mail, MailOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { formatPhone } from "@/lib/formatPhone";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 
@@ -60,9 +64,16 @@ export default function AdminDashboard() {
   const deleteWorker = useDeleteWorker();
   const requestUploadUrl = useRequestUploadUrl();
 
+  // Contact inquiry hooks
+  const { data: contacts, isLoading: contactsLoading } = useListContactInquiries();
+  const patchContact = usePatchContactInquiry();
+  const deleteContact = useDeleteContactInquiry();
+
   // Dialog states
   const [workerDialog, setWorkerDialog] = useState<{isOpen: boolean, mode: 'create'|'edit', id?: number}>({ isOpen: false, mode: 'create' });
   const [deleteConfirmDialog, setDeleteConfirmDialog] = useState<{isOpen: boolean, id?: number, name?: string}>({ isOpen: false });
+  const [expandedContact, setExpandedContact] = useState<number | null>(null);
+  const [deleteContactDialog, setDeleteContactDialog] = useState<{isOpen: boolean, id?: number, name?: string}>({ isOpen: false });
 
   // Guard
   useEffect(() => {
@@ -162,22 +173,19 @@ export default function AdminDashboard() {
     if (!file) return;
 
     try {
-      // 1. Get upload URL
       const { uploadURL, objectPath } = await requestUploadUrl.mutateAsync({
         data: { name: file.name, size: file.size, contentType: file.type }
       });
 
-      // 2. PUT file directly to GCS
       await fetch(uploadURL, {
         method: "PUT",
         headers: { "Content-Type": file.type },
         body: file,
       });
 
-      // 3. Update settings with object path
       await updateSettings.mutateAsync({
         data: {
-          ...settingsForm.getValues(), // preserve existing
+          ...settingsForm.getValues(),
           ceoPhotoUrl: objectPath
         }
       });
@@ -189,6 +197,44 @@ export default function AdminDashboard() {
       toast({ title: "Upload Failed", variant: "destructive" });
     }
   };
+
+  const handleToggleContact = (id: number, isRead: boolean) => {
+    if (expandedContact === id) {
+      setExpandedContact(null);
+      return;
+    }
+    setExpandedContact(id);
+    if (!isRead) {
+      patchContact.mutate({ id, data: { isRead: true } }, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: getListContactInquiriesQueryKey() });
+        }
+      });
+    }
+  };
+
+  const handleMarkUnread = (id: number) => {
+    patchContact.mutate({ id, data: { isRead: false } }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getListContactInquiriesQueryKey() });
+      }
+    });
+  };
+
+  const confirmDeleteContact = () => {
+    if (deleteContactDialog.id) {
+      deleteContact.mutate({ id: deleteContactDialog.id }, {
+        onSuccess: () => {
+          toast({ title: "Inquiry Deleted" });
+          queryClient.invalidateQueries({ queryKey: getListContactInquiriesQueryKey() });
+          setDeleteContactDialog({ isOpen: false });
+          if (expandedContact === deleteContactDialog.id) setExpandedContact(null);
+        }
+      });
+    }
+  };
+
+  const unreadCount = contacts?.filter(c => !c.isRead).length ?? 0;
 
   if (sessionLoading || !session?.authenticated) return null;
 
@@ -216,6 +262,14 @@ export default function AdminDashboard() {
           <TabsList className="bg-slate-900 border border-slate-800 rounded-sm h-auto p-1 mb-8">
             <TabsTrigger value="settings" className="rounded-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3 px-6 uppercase font-bold tracking-widest text-xs">Site Config</TabsTrigger>
             <TabsTrigger value="workers" className="rounded-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3 px-6 uppercase font-bold tracking-widest text-xs">Crew Roster</TabsTrigger>
+            <TabsTrigger value="inquiries" className="rounded-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3 px-6 uppercase font-bold tracking-widest text-xs flex items-center gap-2">
+              Inquiries
+              {unreadCount > 0 && (
+                <span className="bg-primary text-primary-foreground data-[state=active]:bg-white data-[state=active]:text-primary text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center leading-none">
+                  {unreadCount}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="settings" className="space-y-8">
@@ -348,6 +402,131 @@ export default function AdminDashboard() {
                 </div>
              </div>
           </TabsContent>
+
+          <TabsContent value="inquiries">
+            <div className="bg-card border border-border rounded-sm shadow-sm overflow-hidden">
+              <div className="p-6 border-b border-border flex justify-between items-center bg-muted/50">
+                <div>
+                  <h2 className="text-xl font-heading font-bold uppercase tracking-wider">Signal Inbox</h2>
+                  <p className="text-xs text-muted-foreground uppercase tracking-widest mt-1">
+                    {contacts ? `${contacts.length} total · ${unreadCount} unread` : "Loading..."}
+                  </p>
+                </div>
+              </div>
+
+              {contactsLoading && (
+                <div className="px-6 py-12 text-center text-muted-foreground uppercase tracking-widest font-bold text-sm">
+                  Loading Transmissions...
+                </div>
+              )}
+
+              {!contactsLoading && contacts?.length === 0 && (
+                <div className="px-6 py-12 text-center text-muted-foreground uppercase tracking-widest font-bold text-sm">
+                  No Incoming Signals
+                </div>
+              )}
+
+              {!contactsLoading && contacts && contacts.length > 0 && (
+                <div className="divide-y divide-border">
+                  {contacts.map(contact => {
+                    const isExpanded = expandedContact === contact.id;
+                    const date = contact.createdAt
+                      ? new Date(contact.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
+                      : "—";
+
+                    return (
+                      <div key={contact.id} className={`transition-colors ${!contact.isRead ? "bg-primary/5" : ""}`}>
+                        <button
+                          onClick={() => handleToggleContact(contact.id, contact.isRead)}
+                          className="w-full px-6 py-4 flex items-center gap-4 hover:bg-muted/30 transition-colors text-left"
+                        >
+                          <div className="flex-shrink-0 text-muted-foreground">
+                            {contact.isRead ? <MailOpen size={16} /> : <Mail size={16} className="text-primary" />}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <span className={`font-bold text-sm uppercase truncate ${!contact.isRead ? "text-foreground" : "text-muted-foreground"}`}>
+                                {contact.name}
+                              </span>
+                              <span className="text-xs text-muted-foreground truncate hidden sm:block">{contact.email}</span>
+                              {!contact.isRead && (
+                                <span className="text-[10px] font-black uppercase tracking-widest text-primary border border-primary/30 bg-primary/10 px-2 py-0.5 rounded-sm flex-shrink-0">
+                                  New
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-sm text-muted-foreground mt-0.5 truncate">{contact.subject}</div>
+                          </div>
+                          <div className="flex-shrink-0 flex items-center gap-3">
+                            <span className="text-xs text-muted-foreground font-mono hidden md:block">{date}</span>
+                            {isExpanded ? <ChevronUp size={14} className="text-muted-foreground" /> : <ChevronDown size={14} className="text-muted-foreground" />}
+                          </div>
+                        </button>
+
+                        {isExpanded && (
+                          <div className="px-6 pb-6 border-t border-border/50 bg-muted/20">
+                            <div className="pt-4 space-y-4 max-w-2xl">
+                              <div className="grid grid-cols-2 gap-4 text-xs">
+                                <div>
+                                  <span className="text-muted-foreground uppercase tracking-widest font-bold">From</span>
+                                  <p className="text-foreground font-semibold mt-1">{contact.name}</p>
+                                </div>
+                                <div>
+                                  <span className="text-muted-foreground uppercase tracking-widest font-bold">Email</span>
+                                  <p className="mt-1">
+                                    <a href={`mailto:${contact.email}`} className="text-primary hover:underline font-mono">{contact.email}</a>
+                                  </p>
+                                </div>
+                                <div>
+                                  <span className="text-muted-foreground uppercase tracking-widest font-bold">Subject</span>
+                                  <p className="text-foreground mt-1">{contact.subject}</p>
+                                </div>
+                                <div>
+                                  <span className="text-muted-foreground uppercase tracking-widest font-bold">Received</span>
+                                  <p className="text-foreground mt-1 font-mono">{date}</p>
+                                </div>
+                              </div>
+
+                              <div>
+                                <span className="text-muted-foreground uppercase tracking-widest font-bold text-xs">Message</span>
+                                <div className="mt-2 p-4 bg-background border border-border rounded-sm text-sm text-foreground whitespace-pre-wrap leading-relaxed">
+                                  {contact.message}
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-3 pt-2">
+                                <a
+                                  href={`mailto:${contact.email}?subject=Re: ${encodeURIComponent(contact.subject)}`}
+                                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 text-xs font-bold uppercase tracking-widest rounded-sm transition-all inline-flex items-center gap-2"
+                                >
+                                  <Mail size={12} /> Reply
+                                </a>
+                                {contact.isRead && (
+                                  <button
+                                    onClick={() => handleMarkUnread(contact.id)}
+                                    disabled={patchContact.isPending}
+                                    className="px-4 py-2 border border-border hover:bg-muted text-xs font-bold uppercase tracking-widest rounded-sm transition-colors inline-flex items-center gap-2"
+                                  >
+                                    <Mail size={12} /> Mark Unread
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => setDeleteContactDialog({ isOpen: true, id: contact.id, name: contact.name })}
+                                  className="px-4 py-2 border border-destructive/30 hover:bg-destructive/10 text-destructive text-xs font-bold uppercase tracking-widest rounded-sm transition-colors inline-flex items-center gap-2 ml-auto"
+                                >
+                                  <Trash2 size={12} /> Delete
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
 
@@ -405,7 +584,7 @@ export default function AdminDashboard() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirm */}
+      {/* Delete Worker Confirm */}
       <Dialog open={deleteConfirmDialog.isOpen} onOpenChange={(o) => !o && setDeleteConfirmDialog({ isOpen: false })}>
         <DialogContent className="sm:max-w-md bg-card border-destructive rounded-sm shadow-2xl">
           <DialogHeader>
@@ -420,6 +599,26 @@ export default function AdminDashboard() {
             </button>
             <button onClick={confirmDeleteWorker} disabled={deleteWorker.isPending} className="px-6 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-sm text-xs uppercase font-bold tracking-widest">
               {deleteWorker.isPending ? "Expunging..." : "Execute"}
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Contact Confirm */}
+      <Dialog open={deleteContactDialog.isOpen} onOpenChange={(o) => !o && setDeleteContactDialog({ isOpen: false })}>
+        <DialogContent className="sm:max-w-md bg-card border-destructive rounded-sm shadow-2xl">
+          <DialogHeader>
+            <DialogTitle className="font-heading uppercase tracking-widest text-destructive text-xl">Purge Transmission</DialogTitle>
+            <DialogDescription className="text-slate-400 mt-2">
+              Permanently delete the inquiry from <strong className="text-foreground">{deleteContactDialog.name}</strong>? This cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="pt-6">
+            <button onClick={() => setDeleteContactDialog({ isOpen: false })} className="px-6 py-2 border border-border rounded-sm hover:bg-muted text-xs uppercase font-bold tracking-widest">
+              Abort
+            </button>
+            <button onClick={confirmDeleteContact} disabled={deleteContact.isPending} className="px-6 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-sm text-xs uppercase font-bold tracking-widest">
+              {deleteContact.isPending ? "Purging..." : "Execute"}
             </button>
           </DialogFooter>
         </DialogContent>
