@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/northwave-mobile/"
+title = "NorthWave Mobile"
+version = "1.0.0"
+id = "artifacts/northwave-mobile"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/northwave-mobile/" ]
+localPort = 20882
+
+[services.development]
+run = "pnpm --filter @workspace/northwave-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/northwave-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/northwave-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "20882"
+BASE_PATH = "/northwave-mobile/"

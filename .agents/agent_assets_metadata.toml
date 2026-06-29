@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "R4KqKGb9qm0qk-i42xzIP"
+uri = "file://artifacts/northwave-mobile/assets/images/icon.png"
+type = "image"
+title = "generated_image"
