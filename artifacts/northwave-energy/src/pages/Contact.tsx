@@ -24,121 +24,129 @@ export default function Contact() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", subject: "", message: "" },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     submitContact.mutate({ data: values }, {
       onSuccess: () => {
-        toast({
-          title: "Message Sent",
-          description: "Your inquiry has been received by our operations team.",
-        });
+        toast({ title: "Message Sent", description: "Your inquiry has been received by our operations team." });
         form.reset();
       },
       onError: () => {
-        toast({
-          title: "Error",
-          description: "Failed to send message. Please try again.",
-          variant: "destructive",
-        });
-      }
+        toast({ title: "Error", description: "Failed to send message. Please try again.", variant: "destructive" });
+      },
     });
   }
 
   return (
     <Layout>
-      <SEO 
+      <SEO
         title="Contact Us | NorthWave Energy Drilling"
         description="Get in touch with NorthWave Energy Drilling for consultation on your next major offshore project."
         url="/contact"
         jsonLd={organizationJsonLd}
       />
-      
-      <section className="bg-slate-900 py-16 border-b border-slate-800">
+
+      {/* Header */}
+      <section className="bg-[hsl(221,40%,8%)] pt-28 pb-16 border-b border-white/[0.06]">
         <div className="container mx-auto px-4 md:px-6">
-          <h1 className="text-4xl md:text-5xl font-heading font-black text-white uppercase tracking-tight mb-4">
-            Contact <span className="text-primary">Command</span>
-          </h1>
-          <p className="text-lg text-slate-400 max-w-2xl">
-            Direct line to our operations and procurement teams. Secure your contract.
+          <p className="text-primary text-xs font-semibold tracking-[0.18em] uppercase mb-3">Get In Touch</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact Command</h1>
+          <p className="text-white/55 text-lg max-w-2xl leading-relaxed">
+            Direct line to our operations and procurement teams. Tell us about your next project.
           </p>
         </div>
       </section>
 
-      <section className="py-24 bg-background">
+      <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-16">
-            
-            {/* Contact Info & Map */}
-            <div className="space-y-12">
+          <div className="grid lg:grid-cols-2 gap-14">
+
+            {/* Info */}
+            <div className="space-y-10">
               <div>
-                <h2 className="text-2xl font-heading font-bold uppercase tracking-tight mb-8 border-b-2 border-primary inline-block pb-2">Headquarters</h2>
-                <div className="space-y-6">
+                <h2 className="text-xl font-bold text-white mb-6">Headquarters</h2>
+                <div className="space-y-5">
                   <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 bg-muted flex items-center justify-center rounded-sm text-primary shrink-0">
-                      <MapPin size={24} />
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <MapPin size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-widest text-muted-foreground mb-1">Location</h4>
-                      <p className="font-medium whitespace-pre-line leading-relaxed">{settings?.address || "1400 Offshore Blvd, Suite 800\nHouston, TX 77002"}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 bg-muted flex items-center justify-center rounded-sm text-primary shrink-0">
-                      <Phone size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-sm uppercase tracking-widest text-muted-foreground mb-1">Dispatch & Comm</h4>
-                      <p className="font-medium">{settings?.phone1 || "+1 (555) 019-8472"}</p>
-                      {settings?.phone2 && <p className="font-medium">{settings.phone2}</p>}
+                      <p className="text-white/35 text-xs font-semibold uppercase tracking-widest mb-1">Location</p>
+                      <p className="text-white/80 text-sm font-medium whitespace-pre-line leading-relaxed">
+                        {settings?.address || "1400 Offshore Blvd, Suite 800\nHouston, TX 77002"}
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 bg-muted flex items-center justify-center rounded-sm text-primary shrink-0">
-                      <Mail size={24} />
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <Phone size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-widest text-muted-foreground mb-1">Electronic Comm</h4>
-                      <p className="font-medium">{settings?.contactEmail || "operations@northwave-energy.com"}</p>
+                      <p className="text-white/35 text-xs font-semibold uppercase tracking-widest mb-1">Dispatch & Comm</p>
+                      <p className="text-white/80 text-sm font-medium">{settings?.phone1 || "+1 (555) 019-8472"}</p>
+                      {settings?.phone2 && <p className="text-white/80 text-sm font-medium">{settings.phone2}</p>}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <Mail size={20} />
+                    </div>
+                    <div>
+                      <p className="text-white/35 text-xs font-semibold uppercase tracking-widest mb-1">Electronic Comm</p>
+                      <p className="text-white/80 text-sm font-medium">
+                        {settings?.contactEmail || "operations@northwave-energy.com"}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="w-full h-64 bg-slate-200 border border-border rounded-sm relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")'}}></div>
-                <div className="bg-background/80 backdrop-blur-sm p-4 border border-border flex items-center gap-2 z-10 font-bold uppercase tracking-widest text-sm shadow-md">
-                  <MapPin className="text-primary" size={18} /> GPS Mapping Online
+              {/* Map placeholder */}
+              <div className="w-full h-56 bg-card border border-white/[0.07] rounded-lg relative overflow-hidden flex items-center justify-center">
+                <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'1\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'1\'/%3E%3C/g%3E%3C/svg%3E")'}}></div>
+                <div className="bg-card/80 border border-white/[0.07] rounded-lg px-4 py-2.5 flex items-center gap-2 text-white/60 text-sm font-semibold">
+                  <MapPin size={16} className="text-primary" /> Houston, TX 77002
+                </div>
+              </div>
+
+              {/* Regional offices */}
+              <div>
+                <h3 className="text-sm font-bold text-white/35 uppercase tracking-widest mb-3">Regional Offices</h3>
+                <div className="space-y-2">
+                  {["Houston, TX, USA — Operations HQ", "Aberdeen, Scotland — North Sea Division", "Anchorage, AK, USA — Arctic Operations"].map((office) => (
+                    <div key={office} className="flex items-center gap-3 text-white/55 text-sm">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full shrink-0"></div>
+                      {office}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
             {/* Form */}
-            <div className="bg-card border border-border p-8 md:p-12 rounded-sm shadow-lg relative">
-               <div className="absolute top-0 right-0 w-16 h-1 bg-primary"></div>
-               
-               <h2 className="text-2xl font-heading font-bold uppercase tracking-tight mb-8">Contract Inquiry</h2>
-               
-               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="grid grid-cols-2 gap-6">
+            <div className="bg-card border border-white/[0.07] rounded-xl p-7 md:p-9">
+              <h2 className="text-xl font-bold text-white mb-6">Send Us a Message</h2>
+
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                  <div className="grid grid-cols-2 gap-5">
                     <FormField
                       control={form.control}
                       name="name"
                       render={({ field }) => (
                         <FormItem className="col-span-2 md:col-span-1">
-                          <FormLabel className="uppercase tracking-widest text-xs font-bold text-muted-foreground">Full Name / Rank</FormLabel>
+                          <FormLabel className="text-white/55 text-xs font-semibold uppercase tracking-widest">Full Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="John Doe" className="rounded-sm bg-background border-input focus-visible:ring-primary" {...field} data-testid="input-name" />
+                            <Input
+                              placeholder="John Doe"
+                              className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg h-10"
+                              {...field}
+                              data-testid="input-name"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -149,24 +157,34 @@ export default function Contact() {
                       name="email"
                       render={({ field }) => (
                         <FormItem className="col-span-2 md:col-span-1">
-                          <FormLabel className="uppercase tracking-widest text-xs font-bold text-muted-foreground">Corporate Email</FormLabel>
+                          <FormLabel className="text-white/55 text-xs font-semibold uppercase tracking-widest">Corporate Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="j.doe@company.com" className="rounded-sm bg-background border-input focus-visible:ring-primary" {...field} data-testid="input-email" />
+                            <Input
+                              placeholder="j.doe@company.com"
+                              className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg h-10"
+                              {...field}
+                              data-testid="input-email"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  
+
                   <FormField
                     control={form.control}
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="uppercase tracking-widest text-xs font-bold text-muted-foreground">Subject of Inquiry</FormLabel>
+                        <FormLabel className="text-white/55 text-xs font-semibold uppercase tracking-widest">Subject</FormLabel>
                         <FormControl>
-                          <Input placeholder="Equipment Leasing / Platform Contract" className="rounded-sm bg-background border-input focus-visible:ring-primary" {...field} data-testid="input-subject" />
+                          <Input
+                            placeholder="Equipment Leasing / Platform Contract"
+                            className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg h-10"
+                            {...field}
+                            data-testid="input-subject"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -178,12 +196,12 @@ export default function Contact() {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="uppercase tracking-widest text-xs font-bold text-muted-foreground">Operational Details</FormLabel>
+                        <FormLabel className="text-white/55 text-xs font-semibold uppercase tracking-widest">Message</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="Provide details about timeline, requirements, and location..." 
-                            className="min-h-[150px] rounded-sm bg-background border-input focus-visible:ring-primary resize-y" 
-                            {...field} 
+                          <Textarea
+                            placeholder="Provide details about timeline, requirements, and location..."
+                            className="min-h-[130px] bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg resize-y"
+                            {...field}
                             data-testid="input-message"
                           />
                         </FormControl>
@@ -192,18 +210,17 @@ export default function Contact() {
                     )}
                   />
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={submitContact.isPending}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 text-sm font-bold uppercase tracking-widest rounded-sm transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                    className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                     data-testid="button-submit-contact"
                   >
-                    {submitContact.isPending ? "Transmitting..." : "Transmit Message"} <Send size={18} />
+                    {submitContact.isPending ? "Sending..." : "Send Message"} <Send size={16} />
                   </button>
                 </form>
               </Form>
             </div>
-
           </div>
         </div>
       </section>

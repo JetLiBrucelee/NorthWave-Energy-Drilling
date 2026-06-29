@@ -32,10 +32,7 @@ export default function AdminLogin() {
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
@@ -45,11 +42,7 @@ export default function AdminLogin() {
         setLocation("/admin/dashboard");
       },
       onError: () => {
-        toast({
-          title: "Auth Failed",
-          description: "Invalid credentials.",
-          variant: "destructive",
-        });
+        toast({ title: "Auth Failed", description: "Invalid credentials.", variant: "destructive" });
       }
     });
   }
@@ -57,36 +50,36 @@ export default function AdminLogin() {
   return (
     <Layout>
       <SEO title="Secure Access | NorthWave Energy" description="Authorized personnel only." url="/admin" robots="noindex, nofollow" />
-      
-      <div className="min-h-[calc(100vh-88px)] bg-slate-950 flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-card border border-slate-800 p-8 shadow-2xl relative rounded-sm">
-          
-          <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
-          
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 bg-slate-900 border border-slate-800 flex items-center justify-center rounded-sm">
-              <Lock size={32} className="text-primary" />
+
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="w-full max-w-sm bg-card border border-white/[0.07] rounded-xl p-8 shadow-2xl relative">
+
+          <div className="absolute top-0 inset-x-0 h-0.5 bg-primary rounded-t-xl"></div>
+
+          <div className="flex justify-center mb-7">
+            <div className="w-14 h-14 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
+              <Lock size={26} className="text-primary" />
             </div>
           </div>
-          
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-heading font-bold uppercase tracking-widest text-foreground">Secure Access</h1>
-            <p className="text-xs font-bold tracking-[0.2em] text-muted-foreground uppercase mt-2">Level 4 Clearance Required</p>
+
+          <div className="text-center mb-7">
+            <h1 className="text-xl font-bold text-white">Secure Access</h1>
+            <p className="text-white/35 text-xs font-semibold tracking-widest uppercase mt-1.5">Authorized Personnel Only</p>
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="uppercase tracking-widest text-[10px] font-bold text-muted-foreground">Identifier</FormLabel>
+                    <FormLabel className="text-white/50 text-xs font-semibold uppercase tracking-widest">Email</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="admin@northwave.com" 
-                        className="rounded-sm bg-background border-slate-800 focus-visible:ring-primary font-mono text-sm h-12" 
-                        {...field} 
+                      <Input
+                        placeholder="admin@northwave.com"
+                        className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/20 focus-visible:ring-primary/60 rounded-lg h-10 font-mono text-sm"
+                        {...field}
                         data-testid="input-email"
                       />
                     </FormControl>
@@ -99,13 +92,13 @@ export default function AdminLogin() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="uppercase tracking-widest text-[10px] font-bold text-muted-foreground">Passcode</FormLabel>
+                    <FormLabel className="text-white/50 text-xs font-semibold uppercase tracking-widest">Password</FormLabel>
                     <FormControl>
-                      <Input 
+                      <Input
                         type="password"
-                        placeholder="••••••••" 
-                        className="rounded-sm bg-background border-slate-800 focus-visible:ring-primary font-mono text-lg h-12" 
-                        {...field} 
+                        placeholder="••••••••"
+                        className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/20 focus-visible:ring-primary/60 rounded-lg h-10 font-mono text-base"
+                        {...field}
                         data-testid="input-password"
                       />
                     </FormControl>
@@ -114,20 +107,20 @@ export default function AdminLogin() {
                 )}
               />
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={adminLogin.isPending}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-sm font-bold uppercase tracking-widest rounded-sm transition-all disabled:opacity-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none hover:translate-x-1 hover:translate-y-1"
+                className="w-full bg-primary hover:bg-primary/90 text-white h-10 text-sm font-semibold rounded-lg transition-all disabled:opacity-50 mt-2"
                 data-testid="button-login"
               >
-                {adminLogin.isPending ? "Authenticating..." : "Initialize Override"}
+                {adminLogin.isPending ? "Authenticating..." : "Sign In"}
               </button>
             </form>
           </Form>
 
-          <div className="mt-8 pt-6 border-t border-slate-800 text-center">
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">
-              UNAUTHORIZED ACCESS IS STRICTLY PROHIBITED
+          <div className="mt-6 pt-5 border-t border-white/[0.06] text-center">
+            <p className="text-white/25 text-[10px] uppercase tracking-widest font-mono">
+              Unauthorized access is strictly prohibited
             </p>
           </div>
         </div>

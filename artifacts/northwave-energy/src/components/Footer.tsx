@@ -1,40 +1,80 @@
 import { Link } from "wouter";
-import { Mail, MapPin, Phone, ArrowRight } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useGetSiteSettings } from "@workspace/api-client-react";
 import { LogoFull } from "@/components/Logo";
 
 export function Footer() {
   const { data: settings } = useGetSiteSettings();
 
+  const companyLinks = [
+    { href: "/about", label: "Who We Are" },
+    { href: "/about", label: "Our Heritage" },
+    { href: "/about", label: "Leadership" },
+    { href: "/contact", label: "Careers" },
+    { href: "/contact", label: "Contact" },
+  ];
+
+  const serviceLinks = [
+    { href: "/services#directional-drilling", label: "Directional Drilling" },
+    { href: "/services#well-completion", label: "Well Completion" },
+    { href: "/services#platform-maintenance", label: "Platform Maintenance" },
+    { href: "/services#underwater-inspection", label: "Subsea Inspection" },
+    { href: "/services#pipeline-laying", label: "Pipeline Laying" },
+    { href: "/services#equipment-rental", label: "Equipment Rental" },
+  ];
+
+  const safetyLinks = [
+    { href: "/contact", label: "Safety Standards" },
+    { href: "/contact", label: "Environmental Policy" },
+    { href: "/contact", label: "Health & Safety" },
+    { href: "/contact", label: "ISO Certifications" },
+    { href: "/contact", label: "Compliance" },
+  ];
+
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-8 border-t-4 border-primary">
+    <footer className="bg-[hsl(222,47%,5%)] border-t border-white/[0.06]">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          
-          {/* Brand */}
-          <div className="space-y-4">
+
+        {/* Main footer grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 py-16">
+
+          {/* Brand col — spans 2 on lg */}
+          <div className="lg:col-span-2 space-y-5">
             <Link href="/" className="inline-block">
               <LogoFull variant="light" />
             </Link>
-            <p className="text-sm leading-relaxed text-slate-400 max-w-xs">
-              Delivering heavy-duty offshore drilling solutions with uncompromising precision, safety, and operational excellence in the most demanding environments on Earth.
+            <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+              The world's deepwater ocean-infrastructure leader. Delivering sustainable offshore solutions that power the global energy transition.
             </p>
+            <p className="text-white/35 text-xs leading-relaxed max-w-xs">
+              NorthWave Energy Drilling is committed to pioneering innovative marine technologies while maintaining the highest standards of safety, environmental stewardship, and corporate responsibility.
+            </p>
+
+            {/* Contact details */}
+            <ul className="space-y-2.5 pt-2">
+              <li className="flex items-center gap-3 text-sm text-white/55">
+                <Phone size={14} className="text-primary shrink-0" />
+                <span>{settings?.phone1 || "+1 (555) 019-8472"}</span>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-white/55">
+                <Mail size={14} className="text-primary shrink-0" />
+                <span>{settings?.contactEmail || "operations@northwave-energy.com"}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm text-white/55">
+                <MapPin size={14} className="text-primary shrink-0 mt-0.5" />
+                <span>{settings?.address || "1400 Offshore Blvd, Suite 800\nHouston, TX 77002"}</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Company */}
           <div>
-            <h4 className="text-white font-heading font-bold uppercase tracking-wider mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {[
-                { href: "/about", label: "About Our Company" },
-                { href: "/services", label: "Offshore Services" },
-                { href: "/projects", label: "Project Gallery" },
-                { href: "/contact", label: "Contact Us" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm hover:text-primary transition-colors flex items-center gap-2 group">
-                    <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                    <span className="group-hover:translate-x-1 transition-transform">{link.label}</span>
+            <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-5">Company</h4>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -43,59 +83,65 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-heading font-bold uppercase tracking-wider mb-4">Core Services</h4>
-            <ul className="space-y-2">
-              {[
-                { label: "Directional Drilling", id: "directional-drilling" },
-                { label: "Well Completion", id: "well-completion" },
-                { label: "Platform Maintenance", id: "platform-maintenance" },
-                { label: "Underwater Inspection", id: "underwater-inspection" },
-                { label: "Pipeline Laying", id: "pipeline-laying" },
-              ].map((service) => (
-                <li key={service.id}>
-                  <Link
-                    href={`/services#${service.id}`}
-                    className="text-sm text-slate-400 hover:text-primary transition-colors flex items-center gap-2 group"
-                  >
-                    <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                    <span className="group-hover:translate-x-1 transition-transform">{service.label}</span>
+            <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-5">Services</h4>
+            <ul className="space-y-3">
+              {serviceLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Safety & Quality */}
           <div>
-            <h4 className="text-white font-heading font-bold uppercase tracking-wider mb-4">Headquarters</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
-                <span className="text-sm text-slate-400">{settings?.address || "1400 Offshore Blvd, Suite 800\nHouston, TX 77002"}</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="text-primary shrink-0" />
-                <div className="flex flex-col">
-                  <span className="text-sm text-slate-400">{settings?.phone1 || "+1 (555) 019-8472"}</span>
-                  {settings?.phone2 && <span className="text-sm text-slate-400">{settings.phone2}</span>}
-                </div>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail size={18} className="text-primary shrink-0" />
-                <span className="text-sm text-slate-400">{settings?.contactEmail || "operations@northwave-energy.com"}</span>
-              </li>
+            <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-5">Safety & Quality</h4>
+            <ul className="space-y-3">
+              {safetyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-white/50 text-sm hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-slate-500">
+        {/* Regional offices */}
+        <div className="border-t border-white/[0.06] py-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <p className="text-white/35 text-xs font-semibold uppercase tracking-widest mb-2">Regional Offices</p>
+              <div className="flex flex-wrap gap-6 text-white/50 text-sm">
+                <span>Houston, TX, USA</span>
+                <span>Aberdeen, Scotland</span>
+                <span>Anchorage, AK, USA</span>
+              </div>
+            </div>
+            <div>
+              <p className="text-white/35 text-xs font-semibold uppercase tracking-widest mb-2">Certifications</p>
+              <div className="flex flex-wrap gap-4 text-white/50 text-xs">
+                <span>ISO 9001:2015</span>
+                <span>ISO 14001:2015</span>
+                <span>ISO 45001:2018</span>
+                <span>API Spec Q1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/[0.06] py-5 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-white/30 text-xs">
             &copy; {new Date().getFullYear()} NorthWave Energy Drilling. All rights reserved.
           </p>
-          <div className="flex gap-4 text-xs text-slate-500">
-            <Link href="/contact" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">Safety Standards</Link>
+          <div className="flex gap-6 text-xs text-white/30">
+            <Link href="/contact" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
+            <Link href="/contact" className="hover:text-white/60 transition-colors">Terms of Service</Link>
+            <Link href="/contact" className="hover:text-white/60 transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>

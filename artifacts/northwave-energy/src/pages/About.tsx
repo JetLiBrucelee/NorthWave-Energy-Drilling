@@ -5,7 +5,6 @@ import { useGetSiteSettings, useListWorkers } from "@workspace/api-client-react"
 import { Phone, CheckCircle } from "lucide-react";
 import { formatPhone } from "@/lib/formatPhone";
 
-// Images
 import twoWorkers from "@assets/Screenshot_2026-06-29_at_11.11.33_AM_1782745943544.png";
 import vesselSea from "@assets/Screenshot_2026-06-29_at_11.11.48_AM_1782745943545.png";
 
@@ -13,36 +12,43 @@ export default function About() {
   const { data: settings } = useGetSiteSettings();
   const { data: workers } = useListWorkers();
 
-  // Helper to construct CEO photo URL
-  // objectPath from storage typically looks like "/objects/bucket/..." so prepend /api/storage
   const ceoPhotoUrl = settings?.ceoPhotoUrl
     ? (settings.ceoPhotoUrl.startsWith("http") ? settings.ceoPhotoUrl : `/api/storage${settings.ceoPhotoUrl}`)
     : null;
 
+  const values = [
+    "Zero Incident Tolerance",
+    "Environmental Stewardship",
+    "Technical Superiority",
+    "Unwavering Reliability",
+  ];
+
   return (
     <Layout>
-      <SEO 
+      <SEO
         title="About Us | NorthWave Energy Drilling"
         description="Learn about our history, our leadership, and the expert crew that makes NorthWave a leader in offshore drilling."
         url="/about"
         jsonLd={organizationJsonLd}
       />
-      
+
       {/* Header */}
-      <section className="bg-slate-950 py-24 border-b-4 border-primary relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/3 h-full opacity-30 mix-blend-luminosity">
-          <img src={vesselSea} alt="Offshore supply vessel" className="w-full h-full object-cover" />
+      <section className="relative bg-[hsl(221,40%,8%)] pt-32 pb-20 overflow-hidden border-b border-white/[0.06]">
+        <div className="absolute right-0 top-0 w-2/5 h-full opacity-20">
+          <img src={vesselSea} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(221,40%,8%)] to-transparent"></div>
         </div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
+            className="max-w-2xl"
           >
-            <h1 className="text-5xl md:text-6xl font-heading font-black text-white uppercase tracking-tight mb-6">
-              Forged in <span className="text-primary">Steel</span>.<br/>Proven at Sea.
+            <p className="text-primary text-xs font-semibold tracking-[0.18em] uppercase mb-4">Our Story</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.15] mb-5">
+              Forged in Steel.<br />Proven at Sea.
             </h1>
-            <p className="text-xl text-slate-300 border-l-4 border-primary pl-6">
+            <p className="text-white/60 text-lg leading-relaxed border-l-2 border-primary pl-5">
               Since our inception, NorthWave Energy Drilling has pushed the boundaries of what is possible in offshore extraction, setting new standards for safety, efficiency, and engineering excellence.
             </p>
           </motion.div>
@@ -50,25 +56,25 @@ export default function About() {
       </section>
 
       {/* Story & Values */}
-      <section className="py-24 bg-background">
+      <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary translate-x-4 translate-y-4 rounded-sm -z-10"></div>
-              <img 
-                src={twoWorkers} 
-                alt="Two workers on offshore equipment" 
-                className="w-full h-auto object-cover rounded-sm shadow-xl filter contrast-125 saturate-50"
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <div className="relative rounded-lg overflow-hidden">
+              <img
+                src={twoWorkers}
+                alt="Two workers on offshore equipment"
+                className="w-full h-auto object-cover brightness-90 rounded-lg"
               />
+              <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/10"></div>
             </div>
-            
-            <div className="space-y-8">
+            <div className="space-y-7">
               <div>
-                <h2 className="text-sm font-bold uppercase tracking-widest text-primary mb-2">Our Mission</h2>
-                <h3 className="text-3xl font-heading font-bold uppercase tracking-tight text-foreground">Relentless Pursuit of Operational Perfection.</h3>
+                <p className="text-primary text-xs font-semibold tracking-[0.18em] uppercase mb-3">Our Mission</p>
+                <h2 className="text-3xl font-bold text-white leading-snug">
+                  Relentless Pursuit of Operational Perfection.
+                </h2>
               </div>
-              
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <div className="space-y-4 text-white/55 leading-relaxed text-sm">
                 <p>
                   NorthWave was founded on a simple premise: offshore drilling is unforgiving, and the companies operating in it must be uncompromising. We don't just supply equipment; we supply certainty.
                 </p>
@@ -76,17 +82,11 @@ export default function About() {
                   When you contract NorthWave, you're getting a hardened team of veterans who treat every rig, every pipeline, and every dive as a mission-critical operation.
                 </p>
               </div>
-
-              <div className="grid sm:grid-cols-2 gap-6 pt-6 border-t border-border">
-                {[
-                  "Zero Incident Tolerance",
-                  "Environmental Stewardship",
-                  "Technical Superiority",
-                  "Unwavering Reliability"
-                ].map((value, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle className="text-primary shrink-0 mt-0.5" size={20} />
-                    <span className="font-bold text-foreground">{value}</span>
+              <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-white/[0.07]">
+                {values.map((value, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <CheckCircle size={17} className="text-primary shrink-0" />
+                    <span className="text-white/80 text-sm font-medium">{value}</span>
                   </div>
                 ))}
               </div>
@@ -96,72 +96,79 @@ export default function About() {
       </section>
 
       {/* Leadership */}
-      <section className="py-24 bg-muted border-y border-border">
+      <section className="py-20 bg-[hsl(221,40%,8%)] border-y border-white/[0.06]">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-background p-8 md:p-12 shadow-xl border-l-8 border-primary rounded-sm">
-            {/* CEO portrait — fixed aspect ratio container so real photos display correctly */}
-            <div className="shrink-0 w-48 h-48 rounded-full overflow-hidden border-4 border-muted shadow-xl bg-slate-800 flex items-center justify-center">
+          <div className="max-w-3xl mx-auto bg-card border border-white/[0.07] rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
+            <div className="shrink-0 w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-primary/40 bg-[hsl(220,38%,14%)] flex items-center justify-center">
               {ceoPhotoUrl ? (
                 <img
                   src={ceoPhotoUrl}
                   alt={settings?.ceoName || "CEO"}
-                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-slate-800 text-slate-300 text-5xl font-heading font-black">
+                <span className="text-4xl font-bold text-white/30">
                   {(settings?.ceoName || "C").charAt(0).toUpperCase()}
-                </div>
+                </span>
               )}
             </div>
             <div>
-              <h2 className="text-sm font-bold uppercase tracking-widest text-primary mb-2">Leadership</h2>
-              <h3 className="text-3xl font-heading font-bold uppercase tracking-tight text-foreground mb-4">
+              <p className="text-primary text-xs font-semibold tracking-[0.18em] uppercase mb-2">Leadership</p>
+              <h3 className="text-2xl font-bold text-white mb-1">
                 {settings?.ceoName || "Chief Executive Officer"}
               </h3>
-              <p className="text-muted-foreground italic mb-6">
+              <p className="text-white/35 text-sm font-medium mb-4">CEO & Founder, NorthWave Energy</p>
+              <p className="text-white/60 text-sm leading-relaxed italic">
                 "Our reputation is built on the cold, hard steel of our rigs and the unbreakable resolve of our crews. We don't make excuses; we make well completions happen."
               </p>
-              <div className="font-bold text-sm tracking-widest uppercase">CEO & Founder, NorthWave Energy</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Roster */}
-      <section className="py-24 bg-background">
+      {/* Crew Roster */}
+      <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-sm font-bold uppercase tracking-widest text-primary mb-2">The Crew</h2>
-            <h3 className="text-4xl font-heading font-bold uppercase tracking-tight text-foreground mb-4">Expert Roster</h3>
-            <p className="text-muted-foreground">The men and women who command the deep. Every worker is rigorously certified for extreme condition operations.</p>
+          <div className="text-center max-w-xl mx-auto mb-12">
+            <p className="text-primary text-xs font-semibold tracking-[0.18em] uppercase mb-3">The Crew</p>
+            <h2 className="text-3xl font-bold text-white mb-3">Expert Roster</h2>
+            <p className="text-white/50 text-sm leading-relaxed">
+              The men and women who command the deep. Every worker is rigorously certified for extreme condition operations.
+            </p>
           </div>
 
           {!workers ? (
-             <div className="grid md:grid-cols-3 gap-6">
-                {[1,2,3,4,5,6].map(i => (
-                  <div key={i} className="h-24 bg-muted animate-pulse rounded-sm"></div>
-                ))}
-             </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-24 bg-card animate-pulse rounded-lg border border-white/[0.07]"></div>
+              ))}
+            </div>
           ) : workers.length === 0 ? (
-            <div className="text-center p-12 bg-muted rounded-sm border border-border border-dashed">
-              <p className="text-muted-foreground font-bold uppercase tracking-widest">No crew members listed.</p>
+            <div className="text-center p-12 bg-card rounded-lg border border-white/[0.07] border-dashed">
+              <p className="text-white/40 font-semibold uppercase tracking-widest text-sm">No crew members listed.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {workers.sort((a,b) => a.sortOrder - b.sortOrder).map((worker) => (
-                <div key={worker.id} className="bg-card border border-card-border p-6 rounded-sm shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="flex justify-between items-start mb-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {workers.sort((a, b) => a.sortOrder - b.sortOrder).map((worker) => (
+                <div
+                  key={worker.id}
+                  className="bg-card border border-white/[0.07] rounded-lg p-5 hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex justify-between items-start mb-3">
                     <div>
-                      <h4 className="font-heading font-bold text-lg uppercase tracking-wide">{worker.name}</h4>
-                      <p className="text-sm text-primary font-bold">{worker.role || "Crew Member"}</p>
+                      <h4 className="font-bold text-white text-base">{worker.name}</h4>
+                      <p className="text-primary text-xs font-semibold mt-0.5">{worker.role || "Crew Member"}</p>
                     </div>
-                    <div className="w-10 h-10 bg-muted flex items-center justify-center rounded-full text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <span className="font-bold text-sm">{worker.name.charAt(0)}</span>
+                    <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors text-sm font-bold">
+                      {worker.name.charAt(0)}
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Phone size={14} className="shrink-0" />
-                    <a href={`tel:${worker.phone}`} className="hover:text-foreground transition-colors font-mono tracking-wide">
+                  <div className="flex items-center gap-2 text-white/45 text-sm">
+                    <Phone size={13} className="shrink-0" />
+                    <a
+                      href={`tel:${worker.phone}`}
+                      className="hover:text-white transition-colors font-mono text-xs tracking-wide"
+                    >
                       {formatPhone(worker.phone)}
                     </a>
                   </div>
