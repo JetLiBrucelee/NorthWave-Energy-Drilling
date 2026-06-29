@@ -47,7 +47,7 @@ export default function AdminDashboard() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   
-  const { data: session, isLoading: sessionLoading } = useGetAdminSession({ query: { retry: false, throwOnError: false } });
+  const { data: session, isLoading: sessionLoading } = useGetAdminSession({ query: { retry: false, throwOnError: false, queryKey: ["adminSession"] } });
   const logout = useAdminLogout();
   
   // Data hooks

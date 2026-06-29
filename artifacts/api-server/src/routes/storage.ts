@@ -17,7 +17,14 @@ const objectStorageService = new ObjectStorageService();
  * The client sends JSON metadata (name, size, contentType) — NOT the file.
  * Then uploads the file directly to the returned presigned URL.
  */
-router.post("/storage/uploads/request-url", async (req: Request, res: Response) => {
+router.post("/storage/uploads/request-url", (req: Request, res: Response, next) => {
+  const session = req.session as any;
+  if (!session.adminId) {
+    res.status(401).json({ error: "Not authenticated" });
+    return;
+  }
+  next();
+}, async (req: Request, res: Response) => {
   const parsed = RequestUploadUrlBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: "Missing or invalid required fields" });

@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, organizationJsonLd } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight, Anchor, Shield, HardHat, Droplets } from "lucide-react";
 import { Link } from "wouter";
@@ -16,17 +16,29 @@ export default function Home() {
       <SEO 
         title="NorthWave Energy Drilling | Offshore Drilling Experts"
         description="Heavyweight offshore energy company delivering precision, safety, and operational excellence in extreme conditions."
+        url="/"
+        jsonLd={organizationJsonLd}
       />
       
       {/* Cinematic Hero */}
       <section className="relative h-[85vh] min-h-[600px] flex items-center bg-slate-900 overflow-hidden">
-        {/* Background Image / Overlay */}
+        {/* Background Video / Image Fallback */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={heroImage} 
-            alt="Large offshore platform at dusk" 
-            className="w-full h-full object-cover opacity-60 mix-blend-overlay"
-          />
+          {/* Autoplay video hero — falls back to poster image if blocked */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={heroImage}
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+            crossOrigin="anonymous"
+          >
+            {/* Pexels CC0 offshore drilling footage */}
+            <source src="https://videos.pexels.com/video-files/3249060/3249060-sd_640_360_25fps.mp4" type="video/mp4" />
+            <source src="https://player.vimeo.com/external/384967955.sd.mp4?s=f3e5ce5b9c6b5e6c5e2b4d7d5f3f5e5b&profile_id=165" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
         </div>

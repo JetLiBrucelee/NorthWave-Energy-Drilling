@@ -21,7 +21,7 @@ export default function AdminLogin() {
   const { toast } = useToast();
   const adminLogin = useAdminLogin();
   const { data: session } = useGetAdminSession({
-    query: { retry: false, throwOnError: false }
+    query: { retry: false, throwOnError: false, queryKey: ["adminSession"] }
   });
 
   useEffect(() => {

@@ -41,10 +41,10 @@ export default function Contact() {
         });
         form.reset();
       },
-      onError: (error) => {
+      onError: () => {
         toast({
           title: "Error",
-          description: error.error || "Failed to send message.",
+          description: "Failed to send message. Please try again.",
           variant: "destructive",
         });
       }
