@@ -161,6 +161,8 @@ export const ListContactInquiriesResponseItem = zod.object({
   "id": zod.number(),
   "name": zod.string(),
   "email": zod.string(),
+  "phone": zod.string().nullish(),
+  "address": zod.string().nullish(),
   "subject": zod.string(),
   "message": zod.string(),
   "isRead": zod.boolean(),
@@ -184,6 +186,8 @@ export const PatchContactInquiryResponse = zod.object({
   "id": zod.number(),
   "name": zod.string(),
   "email": zod.string(),
+  "phone": zod.string().nullish(),
+  "address": zod.string().nullish(),
   "subject": zod.string(),
   "message": zod.string(),
   "isRead": zod.boolean(),
@@ -207,6 +211,8 @@ export const DeleteContactInquiryResponse = zod.void()
 export const SubmitContactBody = zod.object({
   "name": zod.string(),
   "email": zod.string(),
+  "phone": zod.string().optional(),
+  "address": zod.string().optional(),
   "subject": zod.string(),
   "message": zod.string()
 })

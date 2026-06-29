@@ -13,6 +13,8 @@ import { MapPin, Phone, Mail, Send } from "lucide-react";
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
+  phone: z.string().optional(),
+  address: z.string().optional(),
   subject: z.string().min(5, "Subject must be at least 5 characters"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
@@ -24,7 +26,7 @@ export default function Contact() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { name: "", email: "", subject: "", message: "" },
+    defaultValues: { name: "", email: "", phone: "", address: "", subject: "", message: "" },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -169,6 +171,50 @@ export default function Contact() {
                               className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg h-10"
                               {...field}
                               data-testid="input-email"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-5">
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem className="col-span-2 md:col-span-1">
+                          <FormLabel className="text-white/55 text-xs font-semibold uppercase tracking-widest">
+                            Phone <span className="normal-case text-white/25 font-normal ml-1">(optional)</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="tel"
+                              placeholder="+1 (713) 555-0182"
+                              className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg h-10"
+                              {...field}
+                              data-testid="input-phone"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="address"
+                      render={({ field }) => (
+                        <FormItem className="col-span-2 md:col-span-1">
+                          <FormLabel className="text-white/55 text-xs font-semibold uppercase tracking-widest">
+                            Company / Address <span className="normal-case text-white/25 font-normal ml-1">(optional)</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Company name and address"
+                              className="bg-[hsl(220,30%,13%)] border-white/[0.08] text-white placeholder:text-white/25 focus-visible:ring-primary/60 rounded-lg h-10"
+                              {...field}
+                              data-testid="input-address"
                             />
                           </FormControl>
                           <FormMessage />
