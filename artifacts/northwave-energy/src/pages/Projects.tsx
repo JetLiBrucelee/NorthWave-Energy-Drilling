@@ -4,6 +4,42 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Play } from "lucide-react";
 
+function YoutubeEmbed({ id, title }: { id: string; title: string }) {
+  const [active, setActive] = useState(false);
+  const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  if (active) {
+    return (
+      <iframe
+        className="absolute inset-0 w-full h-full"
+        src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&autoplay=1`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+    );
+  }
+  return (
+    <button
+      className="absolute inset-0 w-full h-full group/play focus:outline-none"
+      onClick={() => setActive(true)}
+      aria-label={`Play ${title}`}
+      data-video-id={id}
+    >
+      <img
+        src={thumb}
+        alt={title}
+        className="w-full h-full object-cover brightness-75"
+        loading="lazy"
+      />
+      <span className="absolute inset-0 flex items-center justify-center">
+        <span className="flex items-center justify-center w-16 h-16 rounded-full bg-[#3474f4] shadow-lg shadow-[#3474f4]/40 group-hover/play:scale-110 transition-transform duration-200">
+          <Play size={28} className="text-white ml-1" fill="white" />
+        </span>
+      </span>
+    </button>
+  );
+}
+
 import img1 from "@assets/Screenshot_2026-06-29_at_11.10.29_AM_1782745943532.png";
 import img2 from "@assets/Screenshot_2026-06-29_at_11.10.47_AM_1782745943542.png";
 import img3 from "@assets/Screenshot_2026-06-29_at_11.10.59_AM_1782745943543.png";
@@ -102,14 +138,7 @@ export default function Projects() {
                 className="group bg-card border border-white/[0.07] rounded-lg overflow-hidden hover:border-primary/30 transition-all"
               >
                 <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={`https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`}
-                    title={video.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  />
+                  <YoutubeEmbed id={video.id} title={video.title} />
                 </div>
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-2">
