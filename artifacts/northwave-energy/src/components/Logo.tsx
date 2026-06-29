@@ -6,7 +6,7 @@ interface LogoProps {
 }
 
 export function LogoIcon({ size = "md" }: LogoProps) {
-  const dim = size === "sm" ? 28 : size === "lg" ? 52 : 40;
+  const dim = size === "sm" ? 30 : size === "lg" ? 56 : 50;
   return (
     <div
       style={{
@@ -39,13 +39,13 @@ export function LogoFull({ variant = "dark" }: LogoProps) {
   const textColor = variant === "light" ? "#ffffff" : "#f0f6fc";
   const subColor = "rgba(255,255,255,0.45)";
   return (
-    <div className="flex items-center gap-2.5 select-none">
+    <div className="flex items-center gap-3 select-none">
       <LogoIcon size="md" />
       <div className="flex flex-col leading-none">
-        <span style={{ color: textColor, fontWeight: 800, fontSize: 17, letterSpacing: "0.05em" }}>
+        <span style={{ color: textColor, fontWeight: 800, fontSize: 20, letterSpacing: "0.07em" }}>
           NORTH<span style={{ color: "#3474f4" }}>WAVE</span>
         </span>
-        <span style={{ color: subColor, fontSize: 9, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase" as const, marginTop: 3 }}>
+        <span style={{ color: subColor, fontSize: 10, fontWeight: 600, letterSpacing: "0.25em", textTransform: "uppercase" as const, marginTop: 3 }}>
           ENERGY DRILLING
         </span>
       </div>
