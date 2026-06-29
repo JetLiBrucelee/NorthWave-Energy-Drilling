@@ -2,16 +2,16 @@ import { test, expect } from "@playwright/test";
 
 /**
  * Verifies that every YouTube video in the "Live from the Rig" section on the
- * Projects page is publicly available and embeddable.
+ * Projects page is publicly available, embeddable, and actually renders an
+ * iframe when the user clicks the play button.
  *
  * Strategy:
  *  1. Load /projects in a real browser.
  *  2. Scope to the "Live from the Rig" <section> by its heading.
- *  3. Read video IDs from [data-video-id] attributes on the click-to-play
- *     buttons (facade pattern — iframes are not rendered until user clicks).
+ *  3. Read video IDs from [data-video-id] on the click-to-play facade buttons.
  *  4. Assert exactly 3 rig video cards are present.
- *  5. Probe YouTube oEmbed for each ID: HTTP 200 = public/embeddable.
- *  6. Fail with a clear message if any ID is broken.
+ *  5. Probe YouTube oEmbed for each ID (HTTP 200 = public/embeddable).
+ *  6. Click each play button and assert the iframe renders with the correct src.
  */
 
 const OEMBED_BASE = "https://www.youtube.com/oembed?format=json&url=";
@@ -22,7 +22,6 @@ test("all Live from the Rig videos are publicly playable", async ({
   request,
 }) => {
   await page.goto("/projects", { waitUntil: "load" });
-
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 
   const rigSection = page.locator("section").filter({
@@ -43,26 +42,50 @@ test("all Live from the Rig videos are publicly playable", async ({
       `Restore removed cards in artifacts/northwave-energy/src/pages/Projects.tsx`
   ).toBe(EXPECTED_VIDEO_COUNT);
 
-  const failures: string[] = [];
-
+  // --- Step 1: oEmbed verification (public + embeddable) ---
+  const oEmbedFailures: string[] = [];
   for (const videoId of videoIds) {
     if (!videoId) {
-      failures.push(`Found a play button with no data-video-id attribute.`);
+      oEmbedFailures.push(`Found a play button with no data-video-id attribute.`);
       continue;
     }
-    const oEmbedUrl = `${OEMBED_BASE}https://www.youtube.com/watch?v=${videoId}`;
-    const res = await request.get(oEmbedUrl);
-
+    const res = await request.get(
+      `${OEMBED_BASE}https://www.youtube.com/watch?v=${videoId}`
+    );
     if (!res.ok()) {
-      failures.push(
-        `Video ID "${videoId}" is unavailable (oEmbed HTTP ${res.status()}).\n` +
-          `  Update the VIDEOS array in artifacts/northwave-energy/src/pages/Projects.tsx`
+      oEmbedFailures.push(
+        `Video ID "${videoId}" is unavailable or has embedding disabled ` +
+          `(oEmbed HTTP ${res.status()}). ` +
+          `Update the VIDEOS array in artifacts/northwave-energy/src/pages/Projects.tsx`
       );
     }
   }
-
   expect(
-    failures,
-    `${failures.length} rig video(s) are broken:\n\n${failures.join("\n\n")}`
+    oEmbedFailures,
+    `${oEmbedFailures.length} video(s) failed oEmbed check:\n\n${oEmbedFailures.join("\n\n")}`
   ).toHaveLength(0);
+
+  // --- Step 2: Click-to-play verification (iframe renders in DOM) ---
+  // Re-navigate so each click is tested on a fresh card state.
+  for (let i = 0; i < videoIds.length; i++) {
+    await page.goto("/projects", { waitUntil: "load" });
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+
+    const buttons = page
+      .locator("section")
+      .filter({ has: page.locator('h2:has-text("Live from the Rig")') })
+      .locator("button[data-video-id]");
+
+    await buttons.nth(i).waitFor({ state: "attached", timeout: 15000 });
+    await buttons.nth(i).click();
+
+    // After clicking, the button is replaced by an <iframe>
+    const iframe = page
+      .locator("section")
+      .filter({ has: page.locator('h2:has-text("Live from the Rig")') })
+      .locator(`iframe[src*="${videoIds[i]}"]`);
+
+    await expect(iframe, `Clicking play for video "${videoIds[i]}" did not render an iframe.`)
+      .toBeVisible({ timeout: 8000 });
+  }
 });
