@@ -27,7 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LogOut, Save, Plus, Trash2, Edit, Upload, Mail, MailOpen, ChevronDown, ChevronUp } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, Edit, Upload, Mail, MailOpen, ChevronDown, ChevronUp, X } from "lucide-react";
 import { formatPhone } from "@/lib/formatPhone";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 
@@ -168,6 +168,18 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleRemovePhoto = async () => {
+    try {
+      await updateSettings.mutateAsync({
+        data: { ...settingsForm.getValues(), ceoPhotoUrl: "" }
+      });
+      queryClient.invalidateQueries({ queryKey: getGetSiteSettingsQueryKey() });
+      toast({ title: "Photo Removed" });
+    } catch {
+      toast({ title: "Remove Failed", variant: "destructive" });
+    }
+  };
+
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -298,7 +310,21 @@ export default function AdminDashboard() {
                     <FormField control={settingsForm.control} name="phone2" render={({ field }) => (
                       <FormItem>
                         <FormLabel className="uppercase tracking-widest text-xs font-bold text-muted-foreground">Dispatch Line 2 (Opt)</FormLabel>
-                        <FormControl><Input className="rounded-sm" {...field} value={field.value || ""} /></FormControl>
+                        <FormControl>
+                          <div className="relative">
+                            <Input className="rounded-sm pr-8" {...field} value={field.value || ""} />
+                            {field.value && (
+                              <button
+                                type="button"
+                                onClick={() => settingsForm.setValue("phone2", "")}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                title="Clear"
+                              >
+                                <X size={14} />
+                              </button>
+                            )}
+                          </div>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )} />
@@ -328,12 +354,22 @@ export default function AdminDashboard() {
                       ) : (
                         <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-slate-500 font-bold text-xs uppercase">No Img</div>
                       )}
-                      <div>
+                      <div className="flex flex-col gap-2">
                         <label className="bg-background border border-border hover:bg-muted text-foreground px-4 py-2 text-xs font-bold uppercase tracking-widest rounded-sm cursor-pointer transition-colors inline-flex items-center gap-2">
                           <Upload size={14} /> Upload Portrait
                           <input type="file" className="hidden" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoUpload} disabled={requestUploadUrl.isPending} />
                         </label>
-                        <p className="text-xs text-muted-foreground mt-2">Max 5MB (JPG, PNG)</p>
+                        {settings?.ceoPhotoUrl && (
+                          <button
+                            type="button"
+                            onClick={handleRemovePhoto}
+                            disabled={updateSettings.isPending}
+                            className="bg-destructive/10 hover:bg-destructive/20 border border-destructive/30 text-destructive px-4 py-2 text-xs font-bold uppercase tracking-widest rounded-sm transition-colors inline-flex items-center gap-2"
+                          >
+                            <Trash2 size={14} /> {updateSettings.isPending ? "Removing…" : "Remove Photo"}
+                          </button>
+                        )}
+                        <p className="text-xs text-muted-foreground">Max 5MB (JPG, PNG)</p>
                       </div>
                     </div>
                   </div>

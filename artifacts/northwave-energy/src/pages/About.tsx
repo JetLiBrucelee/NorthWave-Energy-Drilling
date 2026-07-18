@@ -144,12 +144,14 @@ export default function About() {
                 {settings?.ceoName || "Chief Executive Officer"}
               </h3>
               <p className="text-white/35 text-sm font-medium mb-2">CEO & Founder, NorthWave Energy</p>
-              <p className="flex items-center gap-2 text-white/55 text-sm mb-4">
-                <Phone size={13} className="shrink-0 text-primary" />
-                <a href={`tel:${settings?.phone2 || "9048556246"}`} className="hover:text-white transition-colors font-mono tracking-wide">
-                  {formatPhone(settings?.phone2 || "9048556246")}
-                </a>
-              </p>
+              {settings?.phone2 && (
+                <p className="flex items-center gap-2 text-white/55 text-sm mb-4">
+                  <Phone size={13} className="shrink-0 text-primary" />
+                  <a href={`tel:${settings.phone2}`} className="hover:text-white transition-colors font-mono tracking-wide">
+                    {formatPhone(settings.phone2)}
+                  </a>
+                </p>
+              )}
               <p className="text-white/60 text-sm leading-relaxed italic">
                 "Our reputation is built on the cold, hard steel of our rigs and the unbreakable resolve of our crews. We don't make excuses; we make well completions happen."
               </p>
