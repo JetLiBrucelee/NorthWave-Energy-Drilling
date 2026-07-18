@@ -37,7 +37,7 @@ const settingsSchema = z.object({
   address: z.string().min(1),
   phone1: z.string().min(1),
   phone2: z.string().nullable().optional(),
-  ceoName: z.string().min(1),
+  ceoName: z.string().optional(),
 });
 
 const workerSchema = z.object({
@@ -343,7 +343,21 @@ export default function AdminDashboard() {
                     <FormField control={settingsForm.control} name="ceoName" render={({ field }) => (
                       <FormItem className="mb-6">
                         <FormLabel className="uppercase tracking-widest text-xs font-bold text-muted-foreground">CEO Designation</FormLabel>
-                        <FormControl><Input className="rounded-sm" {...field} /></FormControl>
+                        <FormControl>
+                          <div className="relative">
+                            <Input className="rounded-sm pr-8" {...field} value={field.value || ""} />
+                            {field.value && (
+                              <button
+                                type="button"
+                                onClick={() => settingsForm.setValue("ceoName", "")}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                title="Clear"
+                              >
+                                <X size={14} />
+                              </button>
+                            )}
+                          </div>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )} />
