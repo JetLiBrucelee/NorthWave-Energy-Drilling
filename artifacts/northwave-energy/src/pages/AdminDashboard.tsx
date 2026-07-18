@@ -37,7 +37,7 @@ const settingsSchema = z.object({
   address: z.string().min(1),
   phone1: z.string().min(1),
   phone2: z.string().nullable().optional(),
-  ceoName: z.string().optional(),
+  ceoName: z.string().trim().optional(),
 });
 
 const workerSchema = z.object({

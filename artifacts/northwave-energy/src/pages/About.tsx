@@ -129,19 +129,19 @@ export default function About() {
               {ceoPhotoUrl ? (
                 <img
                   src={ceoPhotoUrl}
-                  alt={settings?.ceoName || "CEO"}
+                  alt={settings?.ceoName?.trim() || "CEO"}
                   className="w-full h-full object-cover object-center"
                 />
               ) : (
                 <span className="text-4xl font-bold text-white/30">
-                  {(settings?.ceoName || "C").charAt(0).toUpperCase()}
+                  {(settings?.ceoName?.trim() || "C").charAt(0).toUpperCase()}
                 </span>
               )}
             </div>
             <div>
               <p className="text-primary text-xs font-semibold tracking-[0.18em] uppercase mb-2">Leadership</p>
               <h3 className="text-2xl font-bold text-white mb-1">
-                {settings?.ceoName || "Chief Executive Officer"}
+                {settings?.ceoName?.trim() || "Chief Executive Officer"}
               </h3>
               <p className="text-white/35 text-sm font-medium mb-2">CEO & Founder, NorthWave Energy</p>
               {settings?.phone2 && (
